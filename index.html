@@ -1,0 +1,2134 @@
+<!-- © 2026 GEG 화성(깊이 e끌림). All rights reserved. 무단 복제·재배포·리브랜딩 금지. 문의: bacusiki777@gmail.com -->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <base target="_top">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #fafbff;
+      background-image:
+        radial-gradient(circle at 10% 12%, rgba(255, 196, 182, 0.28) 0%, transparent 40%),
+        radial-gradient(circle at 90% 18%, rgba(168, 214, 240, 0.30) 0%, transparent 42%),
+        radial-gradient(circle at 18% 88%, rgba(204, 232, 196, 0.26) 0%, transparent 42%),
+        radial-gradient(circle at 85% 82%, rgba(214, 200, 240, 0.28) 0%, transparent 42%),
+        linear-gradient(rgba(0, 0, 0, 0.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.022) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+      background-attachment: fixed, fixed, fixed, fixed, scroll, scroll;
+      color: #1a1a1a;
+      -webkit-font-smoothing: antialiased;
+      letter-spacing: -0.01em;
+    }
+
+    /* 제목용 폰트 */
+    h1, h2, h3, .font-display {
+      font-family: 'Jua', 'Pretendard', sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    /* 메인 타이틀 강조용 */
+    .title-pop {
+      font-family: 'Black Han Sans', 'Jua', sans-serif;
+    }
+
+    .retro-box {
+      border: 4px solid #1a1a1a;
+      box-shadow: 8px 8px 0px 0px #1a1a1a;
+      background-color: #fff;
+      transition: box-shadow 0.1s, transform 0.1s;
+    }
+
+    .retro-box:hover {
+      box-shadow: 4px 4px 0px 0px #1a1a1a;
+      transform: translate(4px, 4px);
+    }
+
+    .retro-btn {
+      border: 3px solid #1a1a1a;
+      box-shadow: 4px 4px 0px 0px #1a1a1a;
+      padding: 10px 20px;
+      font-weight: 800;
+      transition: all 0.1s;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .retro-btn:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px 0px #1a1a1a;
+    }
+
+    .retro-btn:active {
+      transform: translate(4px, 4px);
+      box-shadow: 0px 0px 0px 0px #1a1a1a;
+    }
+
+    .retro-input {
+      border: 3px solid #1a1a1a;
+      padding: 12px;
+      width: 100%;
+      background-color: #f8f8f8;
+      font-size: 1rem;
+    }
+
+    .bg-peach {
+      background: linear-gradient(135deg, #FFD9B8 0%, #FFB07A 100%);
+    }
+
+    .bg-mint {
+      background: linear-gradient(135deg, #C5F0DD 0%, #8FE0C0 100%);
+    }
+
+    .bg-yellow {
+      background: linear-gradient(135deg, #FEFEB0 0%, #F5E55C 100%);
+    }
+
+    .bg-sky {
+      background: linear-gradient(135deg, #C5E4FB 0%, #8FC5F0 100%);
+    }
+
+    .bg-lavender {
+      background: linear-gradient(135deg, #E0D4FB 0%, #BFA5F0 100%);
+    }
+
+    .bg-rose {
+      background: linear-gradient(135deg, #FBD0DD 0%, #F0A5BC 100%);
+    }
+
+    .heart-icon {
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .heart-icon:hover {
+      transform: scale(1.2);
+    }
+
+    /* 모달 백드롭 */
+    .modal-bg {
+      background-color: rgba(0, 0, 0, 0.5);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* hidden 클래스 (Tailwind 충돌 방지용) */
+    .hidden-view {
+      display: none !important;
+    }
+
+    /* 정답 카드 스타일 */
+    .answer-card {
+      transition: background-color 0.5s ease;
+    }
+
+    .pinned-blue {
+      background-color: #cce5ff !important;
+      border-color: #007bff;
+    }
+
+    .pinned-yellow {
+      background-color: #fff3cd !important;
+      border-color: #ffc107;
+    }
+
+    .pinned-green {
+      background-color: #d4edda !important;
+      border-color: #28a745;
+    }
+
+    .answer-card.is-mine {
+      box-shadow: 8px 8px 0px 0px #ff8c00;
+      border-color: #ff8c00;
+    }
+
+    /* 카테고리 경로 */
+    .category-path {
+      font-size: 1.8rem;
+      font-weight: bold;
+      padding-left: 0.85rem;
+      border-left: 6px solid #38bdf8;
+    }
+
+    /* 출석부 칸 - 크기 고정 */
+    .sr-cell {
+      height: 150px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .sr-cell-text {
+      flex-grow: 1;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* 액션 버튼 (수정/삭제) */
+    .subject-card-teacher {
+      position: relative;
+    }
+
+    .subject-actions {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      z-index: 10;
+      display: flex;
+      gap: 5px;
+    }
+
+    .action-btn-mini {
+      background-color: white;
+      border: 2px solid #1a1a1a;
+      padding: 2px 8px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .action-btn-mini:hover {
+      background-color: #FDFD96;
+    }
+
+    /* 드래그 가능 카드 */
+    .draggable-card {
+      cursor: grab;
+    }
+    .draggable-card:active {
+      cursor: grabbing;
+    }
+    .draggable-card.dragging {
+      opacity: 0.4;
+      transform: rotate(-2deg);
+    }
+    .draggable-card.drop-before {
+      border-left: 8px dashed #ec4899 !important;
+    }
+    .draggable-card.drop-after {
+      border-right: 8px dashed #ec4899 !important;
+    }
+
+    /* 드래그 핸들 표시 */
+    .drag-handle {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      font-size: 1rem;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    /* 활성화된 핀/정렬 버튼 강조 */
+    .pin-active {
+      box-shadow: 0 0 0 3px #1a1a1a;
+      transform: scale(1.12);
+    }
+    .sort-active {
+      background-color: #1a1a1a !important;
+      color: white !important;
+    }
+  </style>
+</head>
+
+<body class="p-4 md:p-8">
+
+  <!-- 통계 사이드바 (교사용) -->
+  <div id="stats-overlay" class="hidden-view fixed inset-0 bg-black bg-opacity-40 z-40" onclick="app.closeStatsSidebar()"></div>
+  <aside id="stats-sidebar" class="fixed top-0 right-0 h-full w-full max-w-md bg-white border-l-4 border-black z-50 overflow-y-auto p-6"
+    style="transform: translateX(100%); transition: transform 0.25s ease;">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-2xl font-black text-black">📊 학습 통계</h2>
+      <button class="retro-btn bg-white" onclick="app.closeStatsSidebar()">✕ 닫기</button>
+    </div>
+    <div id="stats-body">
+      <div class="text-center py-10 font-bold text-gray-400">불러오는 중...</div>
+    </div>
+  </aside>
+
+  <h1 id="main-title" class="title-pop text-3xl md:text-5xl text-center mb-8 text-black">우리 반 <span style="color:#3b82f6;">질문</span>과 <span style="color:#ec4899;">생각</span> 사전 📖</h1>
+
+  <!-- 1. 시작 화면 (학생 명단에서 선택 + 교사 진입) -->
+  <div id="view-intro" class="max-w-md mx-auto retro-box p-8 hidden-view">
+    <div class="space-y-4">
+      <div>
+        <label class="font-bold block text-lg text-black">내 번호 선택</label>
+        <select id="student-select" class="retro-input">
+          <option value="">-- 명단에서 선택 --</option>
+        </select>
+        <p class="text-xs text-gray-500 mt-1">명단에 없으면 선생님께 말씀해주세요.</p>
+      </div>
+      <button class="retro-btn bg-mint w-full" onclick="app.handleStudentDirectLogin()">🧑‍🎓 입장하기</button>
+    </div>
+
+    <div class="border-t-2 border-dashed border-gray-300 my-6"></div>
+
+    <button class="retro-btn bg-peach w-full text-sm" onclick="app.switchView('view-teacher-login')">👨‍🏫 선생님으로 시작하기</button>
+    <div id="conn-setting-entry" style="margin-top:14px; display:none;">
+      <button type="button" class="retro-btn w-full text-sm" style="background:#EEF2FF;color:#4338CA;" onclick="openConnModal()">⚙️ 선생님 설정 (시트 연결)</button>
+    </div>
+  </div>
+
+  <!-- 2. 교사 로그인 -->
+  <div id="view-teacher-login" class="max-w-md mx-auto retro-box p-8 hidden-view">
+    <h2 class="text-3xl font-black mb-6 text-center text-black">👨‍🏫 교사 로그인</h2>
+    <div class="space-y-4">
+      <div>
+        <label class="font-bold block text-lg text-black">선생님 비밀번호</label>
+        <input type="password" id="teacher-pw" class="retro-input" onkeydown="if(event.key==='Enter')app.handleTeacherAuth()">
+        <p class="text-xs text-gray-500 mt-1">기본 비밀번호는 1234입니다. 로그인 후 변경할 수 있어요.</p>
+      </div>
+      <button class="retro-btn bg-peach w-full" onclick="app.handleTeacherAuth()">로그인</button>
+      <button class="retro-btn bg-white w-full" onclick="app.switchView('view-intro')">⬅️ 뒤로 가기</button>
+    </div>
+  </div>
+
+  <!-- 3. 학생 로그인은 view-intro에 통합됨 -->
+
+  <!-- 4. 대시보드 (과목 목록) -->
+  <div id="view-dashboard" class="max-w-6xl mx-auto hidden-view">
+    <header class="flex justify-between items-center mb-8">
+      <h2 id="dashboard-title" class="text-2xl md:text-3xl font-black text-black"></h2>
+      <div class="flex gap-2 flex-wrap">
+        <button class="retro-btn bg-white" onclick="app.loadDashboard(true)" title="최신 목록 불러오기">🔄 새로고침</button>
+        <button id="dashboard-stats-btn" class="retro-btn bg-sky" onclick="app.openStatsSidebar()">📊 통계</button>
+        <button id="dashboard-header-action" class="retro-btn bg-peach"
+          onclick="app.createSubjectFlow()">➕ 새 과목</button>
+        <button id="dashboard-student-code" class="retro-btn bg-yellow" style="display:none"
+          onclick="app.switchView('view-student-enter-room')">🔑 코드로 입장</button>
+        <button id="dashboard-student-mgr" class="retro-btn bg-mint" onclick="app.openStudentManager()">👥 학생 관리</button>
+        <button id="dashboard-pw-change" class="retro-btn bg-lavender" onclick="app.changeTeacherPassword()">🔑 비밀번호 변경</button>
+        <button class="retro-btn bg-white" onclick="app.logout()">🚪 로그아웃</button>
+      </div>
+    </header>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="subject-grid">
+      <!-- 과목 카드 동적 생성 -->
+    </div>
+  </div>
+
+  <!-- 5. 단원 목록 (과목 선택 후) -->
+  <div id="view-units" class="max-w-6xl mx-auto hidden-view">
+    <header class="flex justify-between items-center mb-8">
+      <div id="unit-category-path" class="category-path text-sky-600">과목명</div>
+      <div class="flex gap-2">
+        <button class="retro-btn bg-white" onclick="app.loadUnits(app.state.currentSubject, true)" title="최신 단원 불러오기">🔄 새로고침</button>
+        <button id="units-header-action" class="retro-btn bg-peach"
+          onclick="app.createUnitFlow()">➕ 새 단원</button>
+        <button class="retro-btn bg-white" onclick="app.loadDashboard()">🏠 과목 선택</button>
+        <button class="retro-btn bg-gray-100" onclick="app.goBack()">⬅️ 뒤로 가기</button>
+      </div>
+    </header>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="unit-grid">
+      <!-- 단원 카드 동적 생성 -->
+    </div>
+  </div>
+
+  <!-- 6. (차시 단계 제거됨 - 2단 구조) -->
+
+  <!-- 7. 질문방 목록 (단원 선택 후) -->
+  <div id="view-rooms" class="max-w-6xl mx-auto hidden-view">
+    <header class="flex justify-between items-center mb-8">
+      <div id="room-category-path" class="category-path text-sky-600">과목 &gt; 단원</div>
+      <div class="flex gap-2">
+        <button class="retro-btn bg-white" onclick="app.loadRooms(app.state.currentUnit)" title="최신 질문방 불러오기">🔄 새로고침</button>
+        <button id="rooms-header-action" class="retro-btn bg-peach"
+          onclick="app.createRoomFlow()">➕ 새 질문방</button>
+        <button class="retro-btn bg-white" onclick="app.loadDashboard()">🏠 과목 선택</button>
+        <button class="retro-btn bg-gray-100" onclick="app.goBack()">⬅️ 뒤로 가기</button>
+      </div>
+    </header>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="room-grid">
+      <!-- 질문방 카드 동적 생성 -->
+    </div>
+  </div>
+
+  <!-- 8. 교사: 질문방 개설 -->
+  <div id="view-teacher-create" class="max-w-md mx-auto retro-box p-8 hidden-view">
+    <h2 class="text-3xl font-black mb-6 text-center text-black">➕ 새 질문방 개설</h2>
+    <div class="space-y-4">
+
+      <div class="retro-box bg-sky-50 p-3">
+        <div class="text-sm font-bold text-gray-600">개설 위치</div>
+        <div id="tc-location" class="text-lg font-black text-sky-700">과목 &gt; 단원</div>
+      </div>
+
+      <div>
+        <label class="font-bold block text-lg text-black">탐구 질문 (학생들이 답할 핵심 질문)</label>
+        <textarea id="tc-question" class="retro-input" rows="3" placeholder="예: 우리 동네의 자랑거리는 무엇인가요?"></textarea>
+      </div>
+
+      <div>
+        <label class="font-bold block text-lg text-black">입장코드</label>
+        <div class="flex gap-2">
+          <input type="text" id="tc-code" class="retro-input flex-grow" placeholder="예: 사회14">
+          <button class="retro-btn bg-yellow whitespace-nowrap" onclick="app.generateAutoCode()">🎲 자동생성</button>
+        </div>
+      </div>
+
+      <div class="flex gap-2 pt-4">
+        <button class="retro-btn bg-peach w-full" onclick="app.createRoom()">개설하기</button>
+        <button class="retro-btn bg-white w-full" onclick="app.goBack()">⬅️ 뒤로 가기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. 교사: 질문방 관리 -->
+  <div id="view-teacher-room-manage" class="max-w-6xl mx-auto hidden-view">
+    <header class="mb-6">
+      <div class="flex justify-between items-start mb-3 flex-wrap gap-2">
+        <div id="manage-category-path" class="category-path text-sky-600">과목 &gt; 단원</div>
+        <div class="flex gap-2 flex-shrink-0">
+          <button class="retro-btn bg-white" onclick="app.deleteRoomFn()">🗑️ 질문방 삭제</button>
+          <button class="retro-btn bg-white" onclick="app.loadDashboard()">🏠 과목 선택</button>
+          <button class="retro-btn bg-gray-100" onclick="app.goBack()">⬅️ 뒤로 가기</button>
+        </div>
+      </div>
+      <!-- 입장코드(앞) + 질문(크게) -->
+      <div class="flex gap-4 items-center flex-wrap">
+        <div class="retro-box bg-yellow px-4 py-2 cursor-pointer flex-shrink-0 text-center" onclick="app.showRoomCodePopup(event)" title="클릭하면 큰 팝업으로 띄웁니다">
+          <div class="text-xs font-bold text-gray-700">📢 입장코드 🔍</div>
+          <div id="manage-room-id" class="text-3xl md:text-4xl font-black tracking-wider text-black"></div>
+        </div>
+        <h2 id="manage-question" class="text-3xl md:text-5xl font-black text-black"></h2>
+      </div>
+    </header>
+    <div id="teacher-room-stats" class="text-lg font-bold mb-4 text-black"></div>
+    <div id="teacher-room-answers" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+      <!-- 답변 카드 동적 생성 -->
+    </div>
+  </div>
+
+  <!-- 입장코드 플로팅 팝업 (드래그 이동 가능, 다른 작업 가능) -->
+  <div id="code-popup" class="hidden-view fixed z-50 retro-box bg-yellow"
+    style="top: 100px; right: 40px; padding: 0; min-width: 240px;">
+    <div id="code-popup-handle" class="flex justify-between items-center px-3 py-2 border-b-2 border-black cursor-move select-none"
+      style="background: rgba(0,0,0,0.06);">
+      <span class="text-sm font-bold text-gray-700">📢 입장코드 (드래그로 이동)</span>
+      <div class="flex gap-1">
+        <button onclick="app.shrinkCodePopup()" class="action-btn-mini" title="작게">➖</button>
+        <button onclick="app.growCodePopup()" class="action-btn-mini" title="크게">➕</button>
+        <button onclick="app.hideRoomCodePopup()" class="action-btn-mini" title="닫기">✕</button>
+      </div>
+    </div>
+    <div class="px-6 py-4 text-center">
+      <div id="popup-room-id" class="font-black tracking-widest text-black" style="font-size: 8rem; line-height: 1.1;"></div>
+    </div>
+  </div>
+
+  <!-- 10. 학생: 질문방 입장 (코드) -->
+  <div id="view-student-enter-room" class="max-w-md mx-auto retro-box p-8 hidden-view">
+    <h2 class="text-3xl font-black mb-6 text-center text-black">🔑 참여 코드 입력</h2>
+    <div class="space-y-4">
+      <input type="text" id="student-room-code" class="retro-input text-center text-2xl tracking-widest"
+        placeholder="예: 사회14">
+      <button class="retro-btn bg-mint w-full" onclick="app.handleStudentEnterRoom()">입장하기</button>
+      <button class="retro-btn bg-white w-full" onclick="app.goBack()">⬅️ 뒤로 가기</button>
+    </div>
+  </div>
+
+  <!-- 10.5 학생 관리 (교사용) -->
+  <div id="view-student-manager" class="max-w-2xl mx-auto hidden-view">
+    <header class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl md:text-3xl font-black text-black">👥 학생 명단 관리</h2>
+      <button class="retro-btn bg-white" onclick="app.loadDashboard()">🏠 과목 선택</button>
+    </header>
+
+    <div class="retro-box p-6 mb-4 bg-white">
+      <p class="font-bold mb-2">한 줄에 한 명씩, <code class="bg-yellow px-1">번호 [탭 또는 쉼표] 이름</code> 형식으로 입력하세요.</p>
+      <p class="text-sm text-gray-600 mb-1">예시:</p>
+      <pre class="text-xs bg-gray-100 p-2 rounded mb-2 border border-gray-300">01	김철수
+02	이영희
+03	박민수</pre>
+      <p class="text-xs text-gray-500 mb-3">엑셀/스프레드시트에서 두 컬럼을 복사해 붙여넣어도 됩니다. 중복/빈 줄은 자동 제거.</p>
+      <textarea id="student-list-textarea" class="retro-input font-mono" rows="15" placeholder="01&#9;학생01&#10;02&#9;학생02&#10;..."></textarea>
+      <div class="flex flex-wrap gap-2 mt-3">
+        <button class="retro-btn bg-mint" onclick="app.saveStudentList()">💾 저장</button>
+        <button class="retro-btn bg-yellow" onclick="app.resetToDefaultStudents()">🔄 기본값(학생01~30) 복원</button>
+        <button class="retro-btn bg-white" onclick="app.loadStudentManager()">↩️ 변경 취소</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11. 학생: 답변 화면 -->
+  <div id="view-student-room" class="max-w-6xl mx-auto hidden-view">
+    <header class="mb-6">
+      <div class="flex justify-between items-start mb-2 flex-wrap gap-2">
+        <div class="flex-grow">
+          <div id="sr-unit-text" class="category-path text-sky-600">과목 &gt; 단원</div>
+          <h2 id="sr-question" class="text-2xl md:text-3xl font-black text-black mt-1"></h2>
+        </div>
+        <div class="flex gap-2 flex-shrink-0">
+          <button class="retro-btn bg-white" onclick="app.loadDashboard()">🏠 과목 선택</button>
+          <button class="retro-btn bg-gray-100" onclick="app.goBack()">⬅️ 뒤로 가기</button>
+        </div>
+      </div>
+    </header>
+
+    <div id="sr-other-answers-info" class="text-gray-700 mb-4 font-bold"></div>
+    <div id="sr-others-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+      <!-- 출석부: 전체 학생 칸 -->
+    </div>
+  </div>
+
+  <!-- 학생 답변 입력 모달 (출석부 칸 클릭 시) -->
+  <div id="sr-answer-modal" class="hidden-view fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4" onclick="if(event.target===this) app.closeAnswerModal()">
+    <div class="retro-box bg-yellow p-6 max-w-lg w-full">
+      <h3 id="sr-modal-title" class="text-xl font-black mb-1 text-black">✏️ 나의 답변 작성</h3>
+      <p id="sr-modal-question" class="text-sm text-gray-600 mb-3"></p>
+      <textarea id="sr-modal-text" class="retro-input" rows="5" placeholder="여기에 답변을 작성하세요..."></textarea>
+      <div id="sr-modal-comment" class="hidden-view mt-3 p-2 bg-white border-l-4 border-orange-400 text-sm text-black"></div>
+      <div class="flex gap-2 mt-4">
+        <button id="sr-modal-submit" class="retro-btn bg-peach flex-grow" onclick="app.submitMyAnswer()">제출</button>
+        <button id="sr-modal-save" class="retro-btn bg-peach flex-grow hidden-view" onclick="app.saveEditedAnswer()">💾 수정 저장</button>
+        <button class="retro-btn bg-white" onclick="app.closeAnswerModal()">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+/* ================= 시트 연결 + 체험(데모) 브리지 ================= */
+(function(){
+  var LS_EXEC='execUrl:qdict';
+  var HASH=(function(){var m=(location.hash||'').match(/[#&]c=([^&]+)/);return m?decodeURIComponent(m[1]):'';})();
+  window.__qdict={
+    IS_LINK:!!HASH, NATIVE:(typeof google!=='undefined'&&google.script&&google.script.run),
+    getExec:function(){ if(HASH) return HASH; try{return localStorage.getItem(LS_EXEC)||'';}catch(e){return '';} },
+    isConnected:function(){ return this.NATIVE||!!this.getExec(); }
+  };
+
+  /* ---- 데모 저장소 ---- */
+  var DKEY='demo:qdict:v1';
+  function dload(){ try{var r=localStorage.getItem(DKEY);return r?JSON.parse(r):null;}catch(e){return null;} }
+  function dsave(d){ try{localStorage.setItem(DKEY,JSON.stringify(d));}catch(e){} }
+  function dinit(){
+    var d=dload(); if(d) return d;
+    var students=[]; for(var i=1;i<=30;i++) students.push({number:String(i),name:'학생'+i});
+    // 실제로 어떻게 쓰는지 보이도록 예시 과목/단원/질문방/답변
+    d={
+      students:students,
+      subjects:['국어','과학'],
+      units:{ '국어':['1. 마음을 나누는 글','2. 인물의 삶'], '과학':['1. 식물의 한살이'] },
+      rooms:{
+        '국어||1. 마음을 나누는 글':[
+          {roomId:'r1', question:'친구에게 고마웠던 일을 한 가지 떠올려 써 볼까요?', createdAt:'2026-03-02', subjectName:'국어', unitName:'1. 마음을 나누는 글', maxLikes:3}
+        ],
+        '국어||2. 인물의 삶':[
+          {roomId:'r2', question:'본받고 싶은 인물과 그 까닭을 써 봅시다.', createdAt:'2026-03-05', subjectName:'국어', unitName:'2. 인물의 삶', maxLikes:3}
+        ],
+        '과학||1. 식물의 한살이':[
+          {roomId:'r3', question:'씨앗이 싹트려면 무엇이 필요할까요? 내 생각을 써 봐요.', createdAt:'2026-03-08', subjectName:'과학', unitName:'1. 식물의 한살이', maxLikes:3}
+        ]
+      },
+      answers:{
+        'r1':[
+          {studentNumber:'1', studentName:'학생1', text:'비 오는 날 우산을 함께 씌워 준 친구가 고마웠다.', submitted:true, likers:['학생2','학생3'], history:[], teacherComment:'마음이 잘 느껴지는 글이에요.', pinned:true},
+          {studentNumber:'2', studentName:'학생2', text:'준비물을 빌려준 짝꿍에게 고마웠다.', submitted:true, likers:['학생1'], history:[], teacherComment:'', pinned:false}
+        ],
+        'r2':[
+          {studentNumber:'3', studentName:'학생3', text:'세종대왕님을 본받고 싶다. 백성을 사랑했기 때문이다.', submitted:true, likers:['학생1'], history:[], teacherComment:'', pinned:false}
+        ],
+        'r3':[]
+      },
+      teacherPw:'1234', maxLikesDefault:3
+    };
+    dsave(d); return d;
+  }
+  function roomKey(s,u){ return s+'||'+u; }
+
+  var Mock={
+    getStudentList:function(){ return dinit().students; },
+    getInitialData:function(){ var d=dinit(); return { students:d.students, subjects:d.subjects }; },
+    verifyStudentLogin:function(name){ var d=dinit(); var f=d.students.find(function(s){return s.name===String(name).trim();}); return f?{success:true, student:f}:{success:false, message:'명단에 없는 이름이에요.'}; },
+    verifyTeacherPassword:function(pw){ return { success:String(pw)===dinit().teacherPw }; },
+    changeTeacherPassword:function(cur,next){ var d=dinit(); if(String(cur)!==d.teacherPw) return {success:false,message:'현재 비밀번호가 달라요.'}; d.teacherPw=String(next); dsave(d); return {success:true}; },
+    getTeacherSubjects:function(){ return dinit().subjects; },
+    getUnitsBySubject:function(s){ var d=dinit(); return d.units[s]||[]; },
+    getRoomsByUnit:function(s,u,studentName){ var d=dinit(); var rms=(d.rooms[roomKey(s,u)]||[]); return rms.map(function(r){ var ans=(d.answers[r.roomId]||[]); var mine=ans.find(function(a){return a.studentName===studentName;}); return Object.assign({},r,{participated:!!(mine&&mine.submitted)}); }); },
+    getRoom:function(id){ var d=dinit(); for(var k in d.rooms){ var hit=d.rooms[k].find(function(r){return r.roomId===id;}); if(hit) return Object.assign({success:true},hit); } return {success:false, message:'방을 찾을 수 없어요.'}; },
+    getAnswers:function(roomId,version){ var d=dinit(); var ans=(d.answers[roomId]||[]); var result=ans.map(function(a){ return { studentNumber:a.studentNumber, studentName:a.studentName, text:a.text, submitted:!!a.submitted, history:a.history||[], likes:(a.likers||[]).length, likers:a.likers||[], teacherComment:a.teacherComment||'', pinned:!!a.pinned }; }); return { changed:true, version:(version||0)+1, answers:result }; },
+    submitAnswer:function(roomId, studentNumber, studentName, text){ var d=dinit(); if(!d.answers[roomId]) d.answers[roomId]=[]; var arr=d.answers[roomId]; var ex=arr.find(function(a){return a.studentName===studentName;}); if(ex){ ex.text=text; ex.submitted=true; } else { arr.push({studentNumber:studentNumber, studentName:studentName, text:text, submitted:true, likers:[], history:[], teacherComment:'', pinned:false}); } dsave(d); return {success:true}; },
+    updateAnswer:function(roomId, studentName, text){ return Mock.submitAnswer(roomId,'',studentName,text); },
+    toggleLike:function(roomId, targetName, likerName){ var d=dinit(); var a=(d.answers[roomId]||[]).find(function(x){return x.studentName===targetName;}); if(!a) return {success:false}; a.likers=a.likers||[]; var i=a.likers.indexOf(likerName); if(i>=0)a.likers.splice(i,1); else a.likers.push(likerName); dsave(d); return {success:true, likes:a.likers.length}; },
+    pinAnswer:function(roomId, targetName){ var d=dinit(); var a=(d.answers[roomId]||[]).find(function(x){return x.studentName===targetName;}); if(a){ a.pinned=!a.pinned; dsave(d);} return {success:true}; },
+    addTeacherComment:function(roomId, targetName, comment){ var d=dinit(); var a=(d.answers[roomId]||[]).find(function(x){return x.studentName===targetName;}); if(a){ a.teacherComment=comment; dsave(d);} return {success:true}; },
+    deleteAnswer:function(roomId, targetName){ var d=dinit(); var arr=d.answers[roomId]||[]; var i=arr.findIndex(function(x){return x.studentName===targetName;}); if(i>=0){arr.splice(i,1); dsave(d);} return {success:true}; },
+    createSubject:function(name){ var d=dinit(); if(d.subjects.indexOf(name)<0){ d.subjects.push(name); d.units[name]=[]; dsave(d);} return {success:true}; },
+    createUnit:function(subject, unit){ var d=dinit(); if(!d.units[subject])d.units[subject]=[]; if(d.units[subject].indexOf(unit)<0){ d.units[subject].push(unit); dsave(d);} return {success:true}; },
+    createRoom:function(data){ var d=dinit(); var s=data.subjectName||data.subject, u=data.unitName||data.unit; var k=roomKey(s,u); if(!d.rooms[k])d.rooms[k]=[]; var id='r'+Date.now(); d.rooms[k].push({roomId:id, question:data.question, createdAt:new Date().toISOString().slice(0,10), subjectName:s, unitName:u, maxLikes:Number(data.maxLikes)||3}); d.answers[id]=[]; dsave(d); return {success:true, roomId:id}; },
+    updateRoomMaxLikes:function(roomId, n){ var d=dinit(); for(var k in d.rooms){ var r=d.rooms[k].find(function(x){return x.roomId===roomId;}); if(r){ r.maxLikes=Number(n)||0; dsave(d);} } return {success:true}; },
+    renameSubject:function(o,n){ var d=dinit(); var i=d.subjects.indexOf(o); if(i>=0){d.subjects[i]=n; d.units[n]=d.units[o]||[]; delete d.units[o]; dsave(d);} return {success:true}; },
+    deleteSubject:function(name){ var d=dinit(); d.subjects=d.subjects.filter(function(x){return x!==name;}); delete d.units[name]; dsave(d); return {success:true}; },
+    renameUnit:function(s,o,n){ var d=dinit(); var arr=d.units[s]||[]; var i=arr.indexOf(o); if(i>=0){arr[i]=n; dsave(d);} return {success:true}; },
+    deleteUnit:function(s,u){ var d=dinit(); if(d.units[s]) d.units[s]=d.units[s].filter(function(x){return x!==u;}); dsave(d); return {success:true}; },
+    deleteRoom:function(roomId){ var d=dinit(); for(var k in d.rooms){ d.rooms[k]=d.rooms[k].filter(function(x){return x.roomId!==roomId;}); } delete d.answers[roomId]; dsave(d); return {success:true}; },
+    saveSubjectOrder:function(order){ var d=dinit(); if(Array.isArray(order)){d.subjects=order; dsave(d);} return {success:true}; },
+    setStudentList:function(arr){ var d=dinit(); if(Array.isArray(arr)){d.students=arr; dsave(d);} return {success:true}; },
+    resetStudentsToDefault:function(){ var d=dinit(); var st=[]; for(var i=1;i<=30;i++)st.push({number:String(i),name:'학생'+i}); d.students=st; dsave(d); return {success:true}; },
+    generateAutoRoomCode:function(){ return {code:'DEMO'+Math.floor(Math.random()*9000+1000)}; },
+    getStatistics:function(){ var d=dinit(); var subjectStats=d.subjects.map(function(s){ var units=(d.units[s]||[]); var rooms=0,answers=0,likes=0; units.forEach(function(u){ var rms=d.rooms[roomKey(s,u)]||[]; rooms+=rms.length; rms.forEach(function(r){ var ans=d.answers[r.roomId]||[]; answers+=ans.filter(function(a){return a.submitted;}).length; ans.forEach(function(a){likes+=(a.likers||[]).length;}); }); }); return {name:s, units:units.length, rooms:rooms, answers:answers, likes:likes}; }); var studentStats=d.students.map(function(st){ var answered=0,likesR=0,pinned=0; for(var rid in d.answers){ (d.answers[rid]||[]).forEach(function(a){ if(a.studentName===st.name){ if(a.submitted)answered++; likesR+=(a.likers||[]).length; if(a.pinned)pinned++; } }); } return {number:st.number, name:st.name, answered:answered, likesReceived:likesR, pinned:pinned}; }); var roomCount=0,answerCount=0,likeCount=0; subjectStats.forEach(function(x){roomCount+=x.rooms;answerCount+=x.answers;likeCount+=x.likes;}); return { overview:{subjectCount:d.subjects.length, roomCount:roomCount, answerCount:answerCount, likeCount:likeCount}, subjects:subjectStats, students:studentStats }; }
+  };
+
+  /* ---- JSONP (연동 읽기) + no-cors POST (연동 쓰기) ---- */
+  var READ_ONLY={getStudentList:1,getInitialData:1,verifyStudentLogin:1,verifyTeacherPassword:1,getTeacherSubjects:1,getUnitsBySubject:1,getRoomsByUnit:1,getRoom:1,getAnswers:1,getStatistics:1,generateAutoRoomCode:1};
+  function jsonp(name,args){
+    return new Promise(function(resolve,reject){
+      var url=window.__qdict.getExec(); if(!url){reject(new Error('연결된 시트가 없습니다.'));return;}
+      var cb='__qd_'+Date.now()+'_'+Math.floor(Math.random()*1e6);
+      var sc=document.createElement('script'); var done=false;
+      var timer=setTimeout(function(){if(done)return;done=true;clean();reject(new Error('응답이 없어요'));},20000);
+      function clean(){clearTimeout(timer);try{delete window[cb];}catch(e){window[cb]=undefined;}if(sc.parentNode)sc.parentNode.removeChild(sc);}
+      window[cb]=function(res){if(done)return;done=true;clean();resolve(res);};
+      sc.onerror=function(){if(done)return;done=true;clean();reject(new Error('요청 실패'));};
+      sc.src=url+(url.indexOf('?')>=0?'&':'?')+'action='+encodeURIComponent(name)+'&callback='+cb+'&args='+encodeURIComponent(JSON.stringify(args||[]));
+      document.body.appendChild(sc);
+    });
+  }
+  function postCall(name,args){
+    var url=window.__qdict.getExec();
+    return fetch(url,{method:'POST',mode:'no-cors',body:JSON.stringify({action:name,args:args||[]})}).then(function(){return {success:true};}).catch(function(){return {success:true};});
+  }
+  window.__qdictCall=function(name,args){
+    if(window.__qdict.NATIVE){
+      return new Promise(function(res,rej){ var r=google.script.run.withSuccessHandler(res).withFailureHandler(rej); r[name].apply(r,args||[]); });
+    }
+    if(window.__qdict.getExec()){
+      return READ_ONLY[name] ? jsonp(name,args) : postCall(name,args);
+    }
+    // 데모
+    return new Promise(function(resolve,reject){ setTimeout(function(){ try{ resolve((Mock[name]||function(){return null;}).apply(null,args||[])); }catch(e){ reject(e); } },30); });
+  };
+})();
+
+
+    // ===========================
+    // API 헬퍼
+    // ===========================
+    const api = (function () {
+      const _run = (name, ...args) => window.__qdictCall(name, args);
+      return {
+        getInitialData: () => _run('getInitialData'),
+        getStatistics: () => _run('getStatistics'),
+        // 인증
+        verifyTeacherPassword: (pw) => _run('verifyTeacherPassword', pw),
+        changeTeacherPassword: (cur, next) => _run('changeTeacherPassword', cur, next),
+        // 학생 (비밀번호 없이 명단에서 선택)
+        getStudentList: () => _run('getStudentList'),
+        setStudentList: (arr) => _run('setStudentList', arr),
+        resetStudentsToDefault: () => _run('resetStudentsToDefault'),
+        verifyStudentLogin: (name) => _run('verifyStudentLogin', name),
+        // 네비게이션
+        getTeacherSubjects: (skipCache) => _run('getTeacherSubjects', skipCache),
+        getUnitsBySubject: (s, skipCache) => _run('getUnitsBySubject', s, skipCache),
+        getRoomsByUnit: (s, u, studentName) => _run('getRoomsByUnit', s, u, studentName),
+        // 방
+        getRoom: (id) => _run('getRoom', id),
+        createRoom: (data) => _run('createRoom', data),
+        createSubject: (name) => _run('createSubject', name),
+        createUnit: (s, u) => _run('createUnit', s, u),
+        // 답변
+        getAnswers: (id, version) => _run('getAnswers', id, version),
+        submitAnswer: (data) => _run('submitAnswer', data),
+        updateAnswer: (data) => _run('updateAnswer', data),
+        toggleLike: (rid, target, liker) => _run('toggleLike', rid, target, liker),
+        pinAnswer: (rid, name, p) => _run('pinAnswer', rid, name, p),
+        addTeacherComment: (rid, name, c) => _run('addTeacherComment', rid, name, c),
+        deleteAnswer: (rid, name) => _run('deleteAnswer', rid, name),
+        updateRoomMaxLikes: (rid, maxLikes) => _run('updateRoomMaxLikes', rid, maxLikes),
+        // 관리
+        generateAutoRoomCode: (s, u) => _run('generateAutoRoomCode', s, u),
+        renameSubject: (oldN, newN) => _run('renameSubject', oldN, newN),
+        deleteSubject: (n) => _run('deleteSubject', n),
+        renameUnit: (s, oldU, newU) => _run('renameUnit', s, oldU, newU),
+        deleteUnit: (s, u) => _run('deleteUnit', s, u),
+        deleteRoom: (rid) => _run('deleteRoom', rid),
+        saveSubjectOrder: (arr) => _run('saveSubjectOrder', arr),
+      };
+    })();
+
+    // ===========================
+    // 앱 컨트롤러
+    // ===========================
+    const app = {
+      state: {
+        role: null,           // 'teacher' | 'student'
+        roomId: null,
+        studentName: null,
+        currentSubject: null,
+        currentUnit: null,
+        // 캐시/조회
+        subjects: null,
+        currentRoom: null,    // 현재 방 메타데이터
+        answers: [],
+        roomVersion: null,
+        viewHistory: [],
+        allStudentNames: [],
+        // students 명단 (state.allStudentNames 별칭 - 학생목록 시트의 이름 배열)
+        students: [],
+        // 폴링
+        pollingInterval: null,
+        // 교사용 정렬 모드: 'number' | 'pinned' | 'likes'
+        teacherSort: 'number',
+        // 학생 보안
+        hasSubmittedThisRoom: false,
+      },
+
+      // ============= 화면 전환 =============
+      switchView(id) {
+        // 폴링 정지 (방 화면 떠날 때)
+        if (this.state.pollingInterval) {
+          clearInterval(this.state.pollingInterval);
+          this.state.pollingInterval = null;
+        }
+
+        const current = document.querySelector('[id^="view-"]:not(.hidden-view)');
+        if (current && current.id !== id) this.state.viewHistory.push(current.id);
+
+        document.querySelectorAll('[id^="view-"]').forEach(v => v.classList.add('hidden-view'));
+        const target = document.getElementById(id);
+        if (target) target.classList.remove('hidden-view');
+
+        // 질문방 관리 화면을 벗어나면 입장코드 팝업 닫기
+        if (id !== 'view-teacher-room-manage') {
+          const popup = document.getElementById('code-popup');
+          if (popup) popup.classList.add('hidden-view');
+        }
+
+        // 폴링 시작 (방 화면)
+        if (id === 'view-teacher-room-manage' || id === 'view-student-room') {
+          this.startPolling();
+        }
+      },
+
+      goBack() {
+        if (this.state.viewHistory.length > 0) {
+          const prev = this.state.viewHistory.pop();
+          this.switchView(prev);
+          this.state.viewHistory.pop(); // switchView가 또 쌓은 것 제거
+        } else {
+          this.switchView('view-intro');
+        }
+      },
+
+      logout() {
+        this.state.role = null;
+        this.state.studentName = null;
+        this.state.currentSubject = null;
+        this.state.currentUnit = null;
+        this.state.viewHistory = [];
+        this.switchView('view-intro');
+      },
+
+      // ============= 단계별 개설 흐름 =============
+      // 새 과목 만들기 (대시보드에서)
+      async createSubjectFlow() {
+        const name = prompt("새 과목 이름을 입력하세요 (예: 사회):");
+        if (name === null) return;
+        const clean = name.trim();
+        if (!clean) { alert("과목명을 입력해주세요."); return; }
+        try {
+          await api.createSubject(clean);
+          this.state.subjects = null;
+          await this.loadDashboard();
+          // 방금 만든 과목으로 바로 진입
+          this.loadUnits(clean);
+        } catch (e) { alert(e.message); }
+      },
+
+      // 새 단원 만들기 (과목 안에서)
+      async createUnitFlow() {
+        if (!this.state.currentSubject) { alert("먼저 과목을 선택하세요."); return; }
+        const name = prompt(`'${this.state.currentSubject}' 과목의 새 단원 이름을 입력하세요\n(예: 1-1. 우리나라의 지형):`);
+        if (name === null) return;
+        const clean = name.trim();
+        if (!clean) { alert("단원명을 입력해주세요."); return; }
+        try {
+          await api.createUnit(this.state.currentSubject, clean);
+          await this.loadUnits(this.state.currentSubject);
+          // 방금 만든 단원으로 바로 진입
+          this.loadRooms(clean);
+        } catch (e) { alert(e.message); }
+      },
+
+      // 새 질문방 만들기 (단원 안에서) - 폼으로 이동
+      createRoomFlow() {
+        if (!this.state.currentSubject || !this.state.currentUnit) {
+          alert("먼저 과목과 단원을 선택하세요."); return;
+        }
+        // 폼에 현재 위치 표시, 입력칸 초기화
+        document.getElementById('tc-location').innerText =
+          `${this.state.currentSubject} > ${this.state.currentUnit}`;
+        document.getElementById('tc-question').value = '';
+        document.getElementById('tc-code').value = '';
+        this.switchView('view-teacher-create');
+      },
+
+      // ============= 시작 =============
+      async init() {
+        try {
+          const data = await api.getInitialData();
+          // 학생 명단 저장 ({number, name} 객체 배열)
+          this.state.students = data.students || [];
+          // 호환용: 이름만 추출한 배열 (제출 카운트 등에서 사용)
+          this.state.allStudentNames = this.state.students.map(o => o.name).filter(Boolean);
+          this.state.subjects = data.subjects || [];
+
+          // 학생 선택 드롭다운 채우기
+          this.populateStudentSelect();
+
+          this.switchView('view-intro');
+        } catch (e) {
+          alert("초기 로딩 실패: " + e.message);
+        }
+      },
+
+      // 학생 선택 드롭다운에 명단 채우기 ({번호, 이름} 객체 배열)
+      populateStudentSelect() {
+        const sel = document.getElementById('student-select');
+        if (!sel) return;
+        sel.innerHTML = '<option value="">-- 명단에서 선택 --</option>';
+        this.state.students.forEach(o => {
+          // value=이름 (인증 키), 표시=번호 + 이름
+          const label = (o.number ? `${o.number}번 ` : '') + o.name;
+          if (o.name) sel.add(new Option(label, o.name));
+        });
+      },
+
+      // ============= 교사 인증 =============
+      async handleTeacherAuth() {
+        const pw = document.getElementById('teacher-pw').value;
+        if (!pw) { alert("비밀번호를 입력해주세요."); return; }
+
+        try {
+          const ok = await api.verifyTeacherPassword(pw);
+          if (ok) {
+            this.state.role = 'teacher';
+            document.getElementById('teacher-pw').value = '';
+            this.loadDashboard();
+          } else {
+            alert("비밀번호가 틀렸습니다.");
+          }
+        } catch (e) { alert("오류: " + e.message); }
+      },
+
+      // 교사 비밀번호 변경
+      async changeTeacherPassword() {
+        const cur = prompt("현재 비밀번호를 입력하세요:");
+        if (cur === null) return;
+        const next = prompt("새 비밀번호를 입력하세요:");
+        if (next === null) return;
+        const confirmPw = prompt("새 비밀번호를 다시 한 번 입력하세요:");
+        if (confirmPw === null) return;
+        if (next !== confirmPw) { alert("새 비밀번호가 서로 일치하지 않습니다."); return; }
+
+        try {
+          const r = await api.changeTeacherPassword(cur, next);
+          if (r.success) alert("비밀번호가 변경되었습니다.");
+          else alert(r.message);
+        } catch (e) { alert("오류: " + e.message); }
+      },
+
+      // ============= 학생 인증 =============
+      // ============= 학생 인증 (단순 명단 선택) =============
+      async handleStudentDirectLogin() {
+        const name = document.getElementById('student-select').value;
+        if (!name) { alert("명단에서 본인을 선택해주세요."); return; }
+
+        try {
+          const r = await api.verifyStudentLogin(name);
+          if (r.success) {
+            this.state.role = 'student';
+            this.state.studentName = r.name;
+            this.loadDashboard();
+          } else { alert(r.message); }
+        } catch (e) { alert("오류: " + e.message); }
+      },
+
+      // ============= 통계 사이드바 (교사용) =============
+      async openStatsSidebar() {
+        const sidebar = document.getElementById('stats-sidebar');
+        const overlay = document.getElementById('stats-overlay');
+        overlay.classList.remove('hidden-view');
+        sidebar.style.transform = 'translateX(0)';
+        document.getElementById('stats-body').innerHTML =
+          '<div class="text-center py-10 font-bold text-gray-400">불러오는 중...</div>';
+        try {
+          const stats = await api.getStatistics();
+          this.renderStats(stats);
+        } catch (e) {
+          document.getElementById('stats-body').innerHTML =
+            `<div class="text-center py-10 text-red-500">통계를 불러오지 못했습니다.<br>${this.escapeStr(e.message)}</div>`;
+        }
+      },
+
+      closeStatsSidebar() {
+        document.getElementById('stats-sidebar').style.transform = 'translateX(100%)';
+        document.getElementById('stats-overlay').classList.add('hidden-view');
+      },
+
+      renderStats(stats) {
+        const ov = stats.overview;
+        const esc = (s) => this.escapeStr(String(s));
+
+        // 전체 요약 카드
+        let html = `
+          <div class="grid grid-cols-2 gap-2 mb-6">
+            ${this.statCard('📚 과목', ov.subjectCount, '#C7CEEA')}
+            ${this.statCard('❓ 질문방', ov.roomCount, '#B2E5F2')}
+            ${this.statCard('✍️ 답변', ov.answerCount, '#B5EAD7')}
+            ${this.statCard('❤️ 좋아요', ov.likeCount, '#FFB7B2')}
+          </div>`;
+
+        // 과목별 통계
+        html += `<h3 class="text-lg font-black mb-2 mt-4">📚 과목별 현황</h3>`;
+        if (stats.subjects.length === 0) {
+          html += `<p class="text-gray-400 text-sm mb-4">개설된 과목이 없습니다.</p>`;
+        } else {
+          const maxAns = Math.max(1, ...stats.subjects.map(s => s.answers));
+          html += `<div class="space-y-2 mb-6">`;
+          stats.subjects.forEach(s => {
+            const color = this.colorForSubject(s.name);
+            const pct = Math.round((s.answers / maxAns) * 100);
+            html += `
+              <div class="retro-box p-3" style="box-shadow:3px 3px 0 0 #1a1a1a;">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="font-black">${esc(s.name)}</span>
+                  <span class="text-xs text-gray-500">단원 ${s.units} · 질문 ${s.rooms}</span>
+                </div>
+                <div class="w-full bg-gray-100 rounded-full h-4 overflow-hidden border border-gray-300">
+                  <div class="h-full rounded-full flex items-center justify-end pr-2" style="width:${Math.max(pct, 12)}%; background-color:${color};">
+                    <span class="text-[10px] font-bold text-gray-800">${s.answers}답변</span>
+                  </div>
+                </div>
+                <div class="text-xs text-pink-500 font-bold mt-1">❤️ ${s.likes}</div>
+              </div>`;
+          });
+          html += `</div>`;
+        }
+
+        // 학생별 통계 (답변 수 기준 랭킹)
+        html += `<h3 class="text-lg font-black mb-2 mt-4">🧑‍🎓 학생별 활동</h3>`;
+        const activeStudents = stats.students.filter(s => s.answered > 0 || s.likesReceived > 0 || s.likesGiven > 0);
+        if (activeStudents.length === 0) {
+          html += `<p class="text-gray-400 text-sm">아직 활동 기록이 없습니다.</p>`;
+        } else {
+          // 받은 좋아요 순으로 정렬한 별도 랭킹 + 번호순 전체 표
+          const topLiked = [...stats.students].sort((a, b) => b.likesReceived - a.likesReceived).slice(0, 3).filter(s => s.likesReceived > 0);
+          if (topLiked.length > 0) {
+            html += `<div class="mb-3 p-3 retro-box bg-yellow" style="box-shadow:3px 3px 0 0 #1a1a1a;">
+              <div class="font-black text-sm mb-1">🏆 좋아요 많이 받은 친구</div>`;
+            const medals = ['🥇', '🥈', '🥉'];
+            topLiked.forEach((s, i) => {
+              html += `<div class="text-sm flex justify-between"><span>${medals[i]} ${esc(s.name)}</span><span class="font-bold text-pink-600">❤️ ${s.likesReceived}</span></div>`;
+            });
+            html += `</div>`;
+          }
+
+          // 전체 학생 표 (번호순)
+          html += `<div class="retro-box overflow-hidden" style="box-shadow:3px 3px 0 0 #1a1a1a;">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="bg-gray-100 border-b-2 border-black">
+                  <th class="p-2 text-left">학생</th>
+                  <th class="p-2 text-center">✍️</th>
+                  <th class="p-2 text-center">❤️받음</th>
+                  <th class="p-2 text-center">📌</th>
+                </tr>
+              </thead>
+              <tbody>`;
+          stats.students.forEach(s => {
+            const dim = (s.answered === 0 && s.likesReceived === 0) ? 'opacity-40' : '';
+            html += `
+              <tr class="border-b border-gray-200 ${dim}">
+                <td class="p-2"><span class="text-xs text-gray-400">${esc(s.number)}</span> ${esc(s.name)}</td>
+                <td class="p-2 text-center font-bold">${s.answered}</td>
+                <td class="p-2 text-center text-pink-600 font-bold">${s.likesReceived}</td>
+                <td class="p-2 text-center">${s.pinned > 0 ? '📌' + s.pinned : '-'}</td>
+              </tr>`;
+          });
+          html += `</tbody></table></div>
+            <p class="text-[11px] text-gray-400 mt-2">✍️ 답변 수 · ❤️받음 받은 좋아요 · 📌 선생님이 고정한 답변</p>`;
+        }
+
+        document.getElementById('stats-body').innerHTML = html;
+      },
+
+      statCard(label, value, color) {
+        return `
+          <div class="retro-box p-3 text-center" style="background-color:${color}; box-shadow:3px 3px 0 0 #1a1a1a;">
+            <div class="text-2xl font-black text-black">${value}</div>
+            <div class="text-xs font-bold text-gray-700">${label}</div>
+          </div>`;
+      },
+
+      // ============= 학생 관리 (교사용) =============
+      async openStudentManager() {
+        await this.loadStudentManager();
+        this.switchView('view-student-manager');
+      },
+
+      async loadStudentManager() {
+        try {
+          const list = await api.getStudentList();
+          this.state.students = list;
+          // 텍스트 영역에는 "번호\t이름" 형식으로 표시
+          document.getElementById('student-list-textarea').value =
+            list.map(o => `${o.number || ''}\t${o.name || ''}`).join('\n');
+        } catch (e) { alert("명단 불러오기 실패: " + e.message); }
+      },
+
+      async saveStudentList() {
+        const text = document.getElementById('student-list-textarea').value;
+        // 각 줄을 파싱: 탭 또는 쉼표로 분리
+        const arr = text.split(/\r?\n/).map(line => {
+          const trimmed = line.trim();
+          if (!trimmed) return null;
+          // 탭 또는 쉼표 분리
+          const parts = trimmed.split(/[\t,]/).map(s => s.trim());
+          if (parts.length === 1) {
+            // 구분자 없으면 전체를 이름으로
+            return { number: '', name: parts[0] };
+          }
+          return { number: parts[0], name: parts.slice(1).join(' ') };
+        }).filter(Boolean);
+
+        if (arr.length === 0) {
+          if (!confirm("명단이 비어있습니다. 정말 모두 삭제할까요?")) return;
+        }
+        try {
+          const result = await api.setStudentList(arr);
+          this.state.students = result;
+          this.state.allStudentNames = result.map(o => o.name);
+          this.populateStudentSelect();
+          alert(`저장 완료! 총 ${result.length}명`);
+          document.getElementById('student-list-textarea').value =
+            result.map(o => `${o.number || ''}\t${o.name || ''}`).join('\n');
+        } catch (e) { alert("저장 실패: " + e.message); }
+      },
+
+      async resetToDefaultStudents() {
+        if (!confirm("기본 명단(학생01~학생30)으로 모두 교체합니다. 진행할까요?")) return;
+        try {
+          const result = await api.resetStudentsToDefault();
+          this.state.students = result;
+          this.state.allStudentNames = result.map(o => o.name);
+          this.populateStudentSelect();
+          document.getElementById('student-list-textarea').value =
+            result.map(o => `${o.number || ''}\t${o.name || ''}`).join('\n');
+          alert("기본 명단으로 복원했습니다.");
+        } catch (e) { alert("복원 실패: " + e.message); }
+      },
+
+      // ============= 대시보드 (과목 목록) =============
+      async loadDashboard(forceRefresh) {
+        this.state.viewHistory = [];
+        const grid = document.getElementById('subject-grid');
+        const titleEl = document.getElementById('dashboard-title');
+
+        if (this.state.role === 'teacher') {
+          titleEl.innerText = '👨‍🏫 교사용 대시보드';
+        } else {
+          titleEl.innerText = `🧑‍🎓 ${this.state.studentName}님`;
+        }
+        // 역할별 버튼 표시 전환
+        const isTeacher = this.state.role === 'teacher';
+        const setDisp = (id, show) => {
+          const el = document.getElementById(id);
+          if (el) el.style.display = show ? '' : 'none';
+        };
+        setDisp('dashboard-header-action', isTeacher);   // 새 과목
+        setDisp('dashboard-student-code', !isTeacher);   // 코드로 입장 (학생)
+        setDisp('dashboard-student-mgr', isTeacher);     // 학생 관리
+        setDisp('dashboard-pw-change', isTeacher);       // 비밀번호 변경
+        setDisp('dashboard-stats-btn', isTeacher);       // 통계
+        this.switchView('view-dashboard');
+
+        try {
+          const subjects = await api.getTeacherSubjects(!!forceRefresh);
+          this.state.subjects = subjects;
+          grid.innerHTML = '';
+          if (subjects.length === 0) {
+            const msg = this.state.role === 'teacher'
+              ? '아직 개설된 과목이 없습니다. 우측 상단 ➕ 새 과목 버튼으로 시작하세요!'
+              : '아직 개설된 과목이 없습니다.';
+            grid.innerHTML = `<div class="col-span-full text-center py-10 font-bold text-gray-400">${msg}</div>`;
+            return;
+          }
+          subjects.forEach(s => {
+            const card = document.createElement('div');
+            card.className = "retro-box cursor-pointer h-40 flex items-center justify-center text-center border-4 transition-all subject-card-teacher";
+            card.style.background = this.gradientForSubject(s);
+            card.dataset.subject = s;
+
+            let actions = '';
+            let dragHandle = '';
+            if (this.state.role === 'teacher') {
+              card.classList.add('draggable-card');
+              card.draggable = true;
+              dragHandle = `<div class="drag-handle">⋮⋮</div>`;
+              actions = `
+                <div class="subject-actions">
+                  <button class="action-btn-mini" onclick="event.stopPropagation(); app.editSubjectFn('${this.escapeStr(s)}')">✏️</button>
+                  <button class="action-btn-mini" onclick="event.stopPropagation(); app.deleteSubjectFn('${this.escapeStr(s)}')">🗑️</button>
+                </div>`;
+            }
+            card.innerHTML = `${dragHandle}${actions}<h2 class="text-2xl font-black text-black flex flex-col items-center gap-1"><span class="text-5xl">${this.iconForSubject(s)}</span>${this.escapeStr(s)}</h2>`;
+            card.onclick = () => this.loadUnits(s);
+
+            // 교사만 드래그-드롭 가능
+            if (this.state.role === 'teacher') {
+              this.attachSubjectDragHandlers(card);
+            }
+
+            grid.appendChild(card);
+          });
+        } catch (e) { grid.innerHTML = '과목을 불러오지 못했습니다.'; }
+      },
+
+      // 과목 이름을 해시해서 색조(hue) 결정 (같은 이름은 항상 같은 색)
+      hueForSubject(name) {
+        let h = 2166136261 >>> 0;
+        for (let i = 0; i < name.length; i++) {
+          h ^= name.charCodeAt(i);
+          h = Math.imul(h, 16777619) >>> 0;
+        }
+        // 추가 비트 믹싱으로 고르게 분산
+        h ^= h >>> 13; h = Math.imul(h, 0x5bd1e995) >>> 0; h ^= h >>> 15;
+        h = h >>> 0;
+        return (h / 4294967296) * 360;
+      },
+
+      // 단색 (다른 곳 호환용)
+      colorForSubject(name) {
+        return `hsl(${Math.round(this.hueForSubject(name))}, 68%, 78%)`;
+      },
+
+      // 세련된 그라데이션 배경 (카드용)
+      gradientForSubject(name) {
+        const h = this.hueForSubject(name);
+        const h2 = (h + 28) % 360; // 살짝 다른 색조로 그라데이션
+        return `linear-gradient(135deg, hsl(${Math.round(h)}, 72%, 82%) 0%, hsl(${Math.round(h2)}, 68%, 74%) 100%)`;
+      },
+
+      // 단원 카드: 과목 색조를 기준으로 단원마다 조금씩 변주
+      gradientForUnit(subjectName, unitName) {
+        const baseH = this.hueForSubject(subjectName);
+        // 단원 이름 해시로 작은 변화량 결정
+        const uh = this.hueForSubject(unitName);
+        const hueShift = (uh % 24) - 12;        // 과목 색조에서 ±12° 이내
+        const h = (baseH + hueShift + 360) % 360;
+        const h2 = (h + 24) % 360;
+        const lightVar = 80 + ((Math.round(uh) % 8) - 4); // 명도 76~84% 사이 변주
+        const satVar = 66 + ((Math.round(uh / 8) % 8));    // 채도 66~73% 변주
+        return `linear-gradient(135deg, hsl(${Math.round(h)}, ${satVar}%, ${lightVar}%) 0%, hsl(${Math.round(h2)}, ${satVar - 4}%, ${lightVar - 7}%) 100%)`;
+      },
+
+      // 과목명에 맞는 아이콘 매칭
+      iconForSubject(name) {
+        const n = String(name);
+        const map = [
+          [/국어|독서|문학|작문|한국어/, '📖'],
+          [/영어|english|외국어/i, '🔤'],
+          [/수학|산수|셈/, '➗'],
+          [/과학|물리|화학|생물|지구/, '🔬'],
+          [/사회|역사|지리|정치|경제|일반사회/, '🌍'],
+          [/도덕|윤리|인성/, '💗'],
+          [/음악|노래|합창|기악/, '🎵'],
+          [/미술|그림|디자인|조형/, '🎨'],
+          [/체육|운동|스포츠|건강/, '⚽'],
+          [/실과|기술|가정|요리/, '🔧'],
+          [/정보|컴퓨터|코딩|소프트|sw|ai/i, '💻'],
+          [/창의|창체|동아리|자율/, '✨'],
+          [/한자|漢/, '🀄'],
+          [/환경|생태/, '🌱'],
+          [/진로|직업/, '🧭'],
+        ];
+        for (const [re, icon] of map) {
+          if (re.test(n)) return icon;
+        }
+        return '📚'; // 기본
+      },
+
+      // 과목 카드 드래그-드롭 핸들러
+      attachSubjectDragHandlers(card) {
+        card.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('text/plain', card.dataset.subject);
+          e.dataTransfer.effectAllowed = 'move';
+          card.classList.add('dragging');
+        });
+        card.addEventListener('dragend', () => {
+          card.classList.remove('dragging');
+          document.querySelectorAll('.draggable-card').forEach(c => {
+            c.classList.remove('drop-before', 'drop-after');
+          });
+        });
+        card.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'move';
+          // 카드 좌/우 절반 어디에 드롭할지 표시
+          const rect = card.getBoundingClientRect();
+          const isLeft = (e.clientX - rect.left) < rect.width / 2;
+          card.classList.toggle('drop-before', isLeft);
+          card.classList.toggle('drop-after', !isLeft);
+        });
+        card.addEventListener('dragleave', () => {
+          card.classList.remove('drop-before', 'drop-after');
+        });
+        card.addEventListener('drop', async (e) => {
+          e.preventDefault();
+          const draggedName = e.dataTransfer.getData('text/plain');
+          const targetName = card.dataset.subject;
+          if (!draggedName || draggedName === targetName) return;
+
+          const dropBefore = card.classList.contains('drop-before');
+          card.classList.remove('drop-before', 'drop-after');
+
+          // 새 순서 계산
+          const order = [...this.state.subjects];
+          const fromIdx = order.indexOf(draggedName);
+          if (fromIdx < 0) return;
+          order.splice(fromIdx, 1);
+          let toIdx = order.indexOf(targetName);
+          if (toIdx < 0) return;
+          if (!dropBefore) toIdx++;
+          order.splice(toIdx, 0, draggedName);
+
+          // 즉시 UI 갱신 + 백엔드 저장
+          this.state.subjects = order;
+          this.renderSubjectGrid(order);
+          try {
+            await api.saveSubjectOrder(order);
+          } catch (err) {
+            alert("순서 저장 실패: " + err.message);
+            this.loadDashboard(); // 실패시 서버 상태로 복구
+          }
+        });
+      },
+
+      // 그리드 다시 그리기 (드래그 후 즉시 반영용)
+      renderSubjectGrid(subjects) {
+        const grid = document.getElementById('subject-grid');
+        grid.innerHTML = '';
+        subjects.forEach(s => {
+          const card = document.createElement('div');
+          card.className = "retro-box cursor-pointer h-40 flex items-center justify-center text-center border-4 transition-all subject-card-teacher";
+          card.style.background = this.gradientForSubject(s);
+          card.dataset.subject = s;
+
+          let actions = '';
+          let dragHandle = '';
+          if (this.state.role === 'teacher') {
+            card.classList.add('draggable-card');
+            card.draggable = true;
+            dragHandle = `<div class="drag-handle">⋮⋮</div>`;
+            actions = `
+              <div class="subject-actions">
+                <button class="action-btn-mini" onclick="event.stopPropagation(); app.editSubjectFn('${this.escapeStr(s)}')">✏️</button>
+                <button class="action-btn-mini" onclick="event.stopPropagation(); app.deleteSubjectFn('${this.escapeStr(s)}')">🗑️</button>
+              </div>`;
+          }
+          card.innerHTML = `${dragHandle}${actions}<h2 class="text-2xl font-black text-black flex flex-col items-center gap-1"><span class="text-5xl">${this.iconForSubject(s)}</span>${this.escapeStr(s)}</h2>`;
+          card.onclick = () => this.loadUnits(s);
+
+          if (this.state.role === 'teacher') {
+            this.attachSubjectDragHandlers(card);
+          }
+          grid.appendChild(card);
+        });
+      },
+
+      // ============= 단원 목록 =============
+      async loadUnits(subjectName, forceRefresh) {
+        this.state.currentSubject = subjectName;
+        document.getElementById('unit-category-path').innerText = `[${subjectName}]`;
+        // 교사만 "새 단원" 버튼 표시
+        const newUnitBtn = document.getElementById('units-header-action');
+        if (newUnitBtn) newUnitBtn.style.display = this.state.role === 'teacher' ? '' : 'none';
+        this.switchView('view-units');
+
+        const grid = document.getElementById('unit-grid');
+        grid.innerHTML = '<div class="col-span-full text-center py-10 font-bold">로딩 중...</div>';
+
+        try {
+          const units = await api.getUnitsBySubject(subjectName, !!forceRefresh);
+          grid.innerHTML = '';
+          if (units.length === 0) {
+            const msg = this.state.role === 'teacher'
+              ? '아직 개설된 단원이 없습니다. 우측 상단 ➕ 새 단원 버튼으로 시작하세요!'
+              : '아직 개설된 단원이 없습니다.';
+            grid.innerHTML = `<div class="col-span-full text-center py-10 font-bold text-gray-400">${msg}</div>`;
+            return;
+          }
+          units.forEach(u => {
+            const card = document.createElement('div');
+            card.className = "retro-box cursor-pointer h-40 flex items-center justify-center text-center border-4 transition-all subject-card-teacher";
+            card.style.background = this.gradientForUnit(subjectName, u);
+
+            let actions = '';
+            if (this.state.role === 'teacher') {
+              actions = `
+                <div class="subject-actions">
+                  <button class="action-btn-mini" onclick="event.stopPropagation(); app.editUnitFn('${u}')">✏️</button>
+                  <button class="action-btn-mini" onclick="event.stopPropagation(); app.deleteUnitFn('${u}')">🗑️</button>
+                </div>`;
+            }
+            card.innerHTML = `${actions}<h2 class="text-2xl font-black text-black">${u}</h2>`;
+            card.onclick = () => this.loadRooms(u);
+            grid.appendChild(card);
+          });
+        } catch (e) { grid.innerHTML = '단원을 불러오지 못했습니다.'; }
+      },
+
+      // ============= 질문방 목록 (단원 선택 후 - 2단 구조) =============
+      async loadRooms(unitName) {
+        this.state.currentUnit = unitName;
+        document.getElementById('room-category-path').innerText =
+          `[${this.state.currentSubject} > ${unitName}]`;
+        // 교사만 "새 질문방" 버튼 표시
+        const newRoomBtn = document.getElementById('rooms-header-action');
+        if (newRoomBtn) newRoomBtn.style.display = this.state.role === 'teacher' ? '' : 'none';
+        this.switchView('view-rooms');
+
+        const grid = document.getElementById('room-grid');
+        grid.innerHTML = '<div class="col-span-full text-center py-10 font-bold">로딩 중...</div>';
+
+        try {
+          const rooms = await api.getRoomsByUnit(
+            this.state.currentSubject,
+            unitName,
+            this.state.role === 'student' ? this.state.studentName : null
+          );
+          grid.innerHTML = '';
+          if (rooms.length === 0) {
+            const msg = this.state.role === 'teacher'
+              ? '아직 개설된 질문방이 없습니다. 우측 상단 ➕ 새 질문방 버튼으로 시작하세요!'
+              : '아직 개설된 질문방이 없습니다.';
+            grid.innerHTML = `<div class="col-span-full text-center py-10 font-bold text-gray-400">${msg}</div>`;
+            return;
+          }
+
+          rooms.forEach(r => {
+            const card = document.createElement('div');
+            card.className = "retro-box bg-white cursor-pointer p-6 flex flex-col justify-between h-52 hover:shadow-retro-hover border-4 transition-all";
+
+            let badge = "";
+            if (this.state.role === 'student' && r.participated) {
+              badge = `<span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full font-bold ml-2">참여완료 ✅</span>`;
+            }
+
+            card.innerHTML = `
+              <div>
+                <h3 class="font-black text-xl line-clamp-3 mb-2 text-black">${r.question}</h3>
+                <div class="flex items-center gap-2 flex-wrap">
+                  ${badge}
+                </div>
+              </div>
+              <div class="text-sky-600 font-bold border-t-2 border-black pt-4 flex justify-between items-center">
+                <span>코드: ${r.roomId}</span>
+                <span class="text-sm font-black text-black">${this.state.role === 'teacher' ? '관리하기' : '답변하기'} ➡️</span>
+              </div>`;
+            card.onclick = () => {
+              if (this.state.role === 'teacher') this.openTeacherRoomManage(r.roomId);
+              else this.enterRoomAsStudent(r.roomId);
+            };
+            grid.appendChild(card);
+          });
+        } catch (e) { grid.innerHTML = '질문 목록을 불러오지 못했습니다.'; }
+      },
+
+      // ============= 과목 관리 =============
+      async editSubjectFn(oldName) {
+        const newName = prompt(`'${oldName}' 과목의 새로운 이름을 입력하세요:`, oldName);
+        if (newName && newName !== oldName) {
+          try {
+            await api.renameSubject(oldName, newName);
+            this.loadDashboard();
+          } catch (e) { alert("변경 실패"); }
+        }
+      },
+      async deleteSubjectFn(name) {
+        if (confirm(`'${name}' 과목의 모든 단원과 데이터가 삭제됩니다. 계속할까요?`)) {
+          try {
+            await api.deleteSubject(name);
+            this.loadDashboard();
+          } catch (e) { alert("삭제 실패"); }
+        }
+      },
+
+      // ============= 단원 관리 =============
+      async editUnitFn(oldName) {
+        const newName = prompt(`'${oldName}' 단원의 새로운 이름을 입력하세요:`, oldName);
+        if (newName && newName !== oldName) {
+          try {
+            await api.renameUnit(this.state.currentSubject, oldName, newName);
+            this.loadUnits(this.state.currentSubject);
+          } catch (e) { alert("변경 실패"); }
+        }
+      },
+      async deleteUnitFn(name) {
+        if (confirm(`'${name}' 단원의 모든 질문방이 삭제됩니다. 계속할까요?`)) {
+          try {
+            await api.deleteUnit(this.state.currentSubject, name);
+            this.loadUnits(this.state.currentSubject);
+          } catch (e) { alert("삭제 실패"); }
+        }
+      },
+
+      // ============= 질문방 개설 폼 =============
+      // 과목·단원은 현재 위치(state)에서 고정. 질문과 코드만 입력받음.
+      async generateAutoCode() {
+        const subjectName = this.state.currentSubject;
+        const unitName = this.state.currentUnit;
+        if (!subjectName || !unitName) {
+          alert("과목과 단원이 지정되지 않았습니다.");
+          return;
+        }
+        try {
+          const code = await api.generateAutoRoomCode(subjectName, unitName);
+          document.getElementById('tc-code').value = code;
+        } catch (e) { alert(e.message); }
+      },
+
+      async createRoom() {
+        const subjectName = this.state.currentSubject;
+        const unitName = this.state.currentUnit;
+        const question = document.getElementById('tc-question').value.trim();
+        const roomId = document.getElementById('tc-code').value.trim();
+
+        if (!subjectName || !unitName) {
+          alert("과목과 단원이 지정되지 않았습니다."); return;
+        }
+        if (!question) { alert("탐구 질문을 입력하세요."); return; }
+        if (!roomId) { alert("입장코드를 입력하세요."); return; }
+
+        try {
+          const resId = await api.createRoom({ roomId, subjectName, unitName, question });
+          this.state.subjects = null;
+          alert("방이 개설되었습니다.");
+          this.openTeacherRoomManage(resId);
+        } catch (e) { alert(e.message); }
+      },
+
+      // ============= 교사: 질문방 관리 화면 =============
+      async openTeacherRoomManage(roomId) {
+        this.state.roomId = roomId;
+        this.state.answers = [];
+        this.state.roomVersion = null;
+
+        try {
+          const room = await api.getRoom(roomId);
+          if (!room) { alert("질문방을 찾을 수 없습니다."); return; }
+          this.state.currentRoom = room;
+          this.switchView('view-teacher-room-manage');
+
+          document.getElementById('manage-category-path').innerText =
+            `[${room.subjectName} > ${room.unitName}] 질문 관리`;
+          document.getElementById('manage-question').innerText = room.question;
+          document.getElementById('manage-room-id').innerText = room.roomId;
+
+          this.fetchAndRenderTeacherRoom();
+        } catch (e) { alert(e.message); }
+      },
+
+      async fetchAndRenderTeacherRoom() {
+        const room = this.state.currentRoom;
+        if (!room) return;
+
+        const res = await api.getAnswers(this.state.roomId, this.state.roomVersion);
+        if (!res.changed) return;
+        this.state.roomVersion = res.version;
+        this.state.answers = res.answers || [];
+
+        const stats = document.getElementById('teacher-room-stats');
+        const total = this.state.answers.length;  // 명단 전체(미리 깔린 행 수)
+        const submittedList = this.state.answers.filter(a => a.submitted);
+        const submittedCount = submittedList.length;
+        const sortMode = this.state.teacherSort || 'number';
+        const curLimit = room.maxLikes || 0;
+        const likeOptions = [0, 1, 2, 3, 4, 5].map(v => {
+          const label = v === 0 ? '∞ 무제한' : `${v}개`;
+          const sel = v === curLimit ? 'selected' : '';
+          return `<option value="${v}" ${sel}>${label}</option>`;
+        }).join('');
+
+        // 통계 + 한도 조정 + 정렬 한 줄 컨트롤
+        stats.innerHTML = `
+          <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span class="text-lg font-bold">📊 ${submittedCount}${total > 0 ? '/' + total : ''}명 제출</span>
+            <span class="flex items-center gap-1 text-sm border-l-2 border-gray-300 pl-3">
+              <span class="font-bold">❤️ 좋아요 한도:</span>
+              <select id="maxlikes-select" class="retro-input" style="width:auto; padding:2px 6px; margin:0; transition:background-color 0.3s;" onchange="app.setMaxLikes(this.value)">
+                ${likeOptions}
+              </select>
+              <span id="maxlikes-status" class="text-xs font-bold" style="min-width:64px;"></span>
+            </span>
+            <span class="flex items-center gap-1 text-sm border-l-2 border-gray-300 pl-3">
+              <span class="font-bold">정렬:</span>
+              <button class="action-btn-mini ${sortMode === 'number' ? 'sort-active' : ''}" onclick="app.setTeacherSort('number')">🔢 번호순</button>
+              <button class="action-btn-mini ${sortMode === 'pinned' ? 'sort-active' : ''}" onclick="app.setTeacherSort('pinned')">🎨 색 표시 우선</button>
+              <button class="action-btn-mini ${sortMode === 'likes' ? 'sort-active' : ''}" onclick="app.setTeacherSort('likes')">❤️ 좋아요순</button>
+            </span>
+          </div>`;
+
+        const grid = document.getElementById('teacher-room-answers');
+        grid.innerHTML = '';
+        if (submittedCount === 0 && sortMode !== 'number') {
+          grid.innerHTML = '<div class="col-span-full text-center py-10 font-bold text-gray-400">아직 제출된 답변이 없습니다.</div>';
+          return;
+        }
+
+        // 번호순 모드 = 출석부(전체 명단). 그 외 = 제출자만
+        let listToRender;
+        if (sortMode === 'number') {
+          listToRender = [...this.state.answers].sort((a, b) => this.compareByNumber(a, b));
+        } else {
+          listToRender = [...submittedList].sort((a, b) => {
+            if (sortMode === 'pinned') {
+              if (!!a.isPinned !== !!b.isPinned) return a.isPinned ? -1 : 1;
+            }
+            return b.likes - a.likes;
+          });
+        }
+
+        listToRender.forEach(ans => {
+          const card = document.createElement('div');
+          const numTag = ans.studentNumber
+            ? `<span class="text-xs text-gray-500 mr-1">${this.escapeStr(ans.studentNumber)}번</span>`
+            : '';
+
+          // 미제출 칸 (출석부 모드에서만 나타남)
+          if (!ans.submitted) {
+            card.className = 'retro-box p-3 answer-card flex flex-col justify-between opacity-50';
+            card.style.boxShadow = '3px 3px 0 0 #aaa';
+            card.innerHTML = `
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <h4 class="font-black text-lg text-gray-500">${numTag}${this.escapeStr(ans.studentName)}</h4>
+                </div>
+                <p class="text-sm text-gray-400 italic">미제출 ✏️</p>
+              </div>`;
+            grid.appendChild(card);
+            return;
+          }
+
+          let pinClass = '';
+          if (ans.isPinned === 'blue') pinClass = 'pinned-blue';
+          else if (ans.isPinned === 'yellow') pinClass = 'pinned-yellow';
+          else if (ans.isPinned === 'green') pinClass = 'pinned-green';
+
+          card.className = `retro-box p-3 answer-card flex flex-col justify-between ${pinClass}`;
+
+          const teacherCommentDisplay = ans.teacherComment
+            ? `<div class="mt-2 p-2 bg-yellow border-l-4 border-orange-400 text-sm text-black"><b>📌 선생님:</b> ${this.escapeStr(ans.teacherComment)}</div>`
+            : '';
+
+          const curPin = (ans.isPinned === 'blue' || ans.isPinned === 'yellow' || ans.isPinned === 'green') ? ans.isPinned : '';
+          const pinOptions = [
+            ['', '⚪ 색 없음'],
+            ['blue', '🔵 파랑'],
+            ['yellow', '🟡 노랑'],
+            ['green', '🟢 초록']
+          ].map(([v, label]) => `<option value="${v}" ${v === curPin ? 'selected' : ''}>${label}</option>`).join('');
+
+          card.innerHTML = `
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <h4 class="font-black text-lg text-black">${numTag}${this.escapeStr(ans.studentName)}</h4>
+                <span class="text-sm font-bold text-pink-500">❤️ ${ans.likes}</span>
+              </div>
+              <p class="text-base text-gray-800 whitespace-pre-wrap">${this.escapeStr(ans.text)}</p>
+              ${teacherCommentDisplay}
+            </div>
+            <div class="border-t-2 border-dashed border-gray-300 mt-3 pt-2 flex flex-nowrap gap-2 items-center overflow-x-auto">
+              <select class="retro-input" style="width:auto; padding:2px 4px; margin:0; font-size:0.8rem;" onchange="app.handlePin('${this.escapeStr(ans.studentName)}', this.value)" title="색 표시">
+                ${pinOptions}
+              </select>
+              <select class="retro-input" style="width:auto; padding:2px 4px; margin:0; font-size:0.8rem;" onchange="app.handleAnswerAction('${this.escapeStr(ans.studentName)}', this.value); this.selectedIndex=0;" title="더보기">
+                <option value="">⚙️ 더보기</option>
+                <option value="comment">💬 코멘트</option>
+                <option value="history">📜 수정이력${ans.history && ans.history.length > 0 ? ' (' + ans.history.length + ')' : ''}</option>
+                <option value="delete">🗑️ 답변 지우기</option>
+              </select>
+            </div>`;
+          grid.appendChild(card);
+        });
+      },
+
+      // 더보기 콤보박스 동작 분기
+      handleAnswerAction(studentName, action) {
+        if (action === 'comment') this.handleAddComment(studentName);
+        else if (action === 'history') this.showHistory(studentName);
+        else if (action === 'delete') this.handleDelete(studentName);
+      },
+
+      async handlePin(studentName, color) {
+        // 콤보박스 값: '' = 해제, blue/yellow/green = 해당 색
+        const newValue = color === '' ? false : color;
+        try {
+          await api.pinAnswer(this.state.roomId, studentName, newValue);
+          this.state.roomVersion = null;
+          this.fetchAndRenderTeacherRoom();
+        } catch (e) { alert(e.message); }
+      },
+
+      async handleAddComment(studentName) {
+        const ans = this.state.answers.find(a => a.studentName === studentName);
+        const cur = ans ? (ans.teacherComment || '') : '';
+        const c = prompt(`${studentName}님의 답변에 코멘트:`, cur);
+        if (c !== null) {
+          try {
+            await api.addTeacherComment(this.state.roomId, studentName, c);
+            this.state.roomVersion = null;
+            this.fetchAndRenderTeacherRoom();
+          } catch (e) { alert(e.message); }
+        }
+      },
+
+      async handleDelete(studentName) {
+        if (confirm(`${studentName}님의 답변 내용을 지울까요?\n(명단에는 그대로 남고, 답변만 비워집니다)`)) {
+          try {
+            await api.deleteAnswer(this.state.roomId, studentName);
+            this.state.roomVersion = null;
+            this.fetchAndRenderTeacherRoom();
+          } catch (e) { alert(e.message); }
+        }
+      },
+
+      // 학생의 답변 수정 이력 보기 (이력 없어도 버튼은 모든 카드에 항상 표시)
+      showHistory(studentName) {
+        const ans = this.state.answers.find(a => a.studentName === studentName);
+        if (!ans) return;
+
+        if (!ans.history || ans.history.length === 0) {
+          alert(`${studentName}님은 아직 답변을 수정하지 않았습니다.`);
+          return;
+        }
+
+        // 이전 답변들을 오래된 순으로 나열, 마지막에 현재 답변
+        const list = ans.history.map((h, i) =>
+          `<div class="border-b border-gray-200 py-3">
+            <div class="text-xs text-gray-500 font-bold mb-1">${i + 1}회차 (수정 전)</div>
+            <div class="whitespace-pre-wrap text-gray-700">${this.escapeStr(h)}</div>
+          </div>`).join('');
+
+        const html = `
+          <div class="modal-bg fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4" onclick="if(event.target===this) this.remove()">
+            <div class="retro-box bg-white p-6 max-w-lg w-full max-h-[80vh] overflow-y-auto">
+              <h3 class="text-xl font-black mb-4">📜 ${this.escapeStr(studentName)}님 수정 이력 (총 ${ans.history.length}회)</h3>
+              ${list}
+              <div class="py-3 bg-green-50 px-3 mt-2 border-2 border-green-400">
+                <div class="text-xs text-green-700 font-bold mb-1">✅ 현재 답변</div>
+                <div class="whitespace-pre-wrap text-gray-900">${this.escapeStr(ans.text)}</div>
+              </div>
+              <button class="retro-btn bg-white mt-4 w-full" onclick="this.closest('.modal-bg').remove()">닫기</button>
+            </div>
+          </div>`;
+        document.body.insertAdjacentHTML('beforeend', html);
+      },
+
+      // 좋아요 한도 설정 (콤보박스에서 선택: 0=무제한 ~ 5)
+      async setMaxLikes(value) {
+        const room = this.state.currentRoom;
+        if (!room) return;
+        const next = Math.max(0, parseInt(value) || 0);
+
+        const sel = document.getElementById('maxlikes-select');
+        const status = document.getElementById('maxlikes-status');
+
+        // 저장 중 표시 (노랑)
+        if (sel) sel.style.backgroundColor = '#fff3cd';
+        if (status) { status.textContent = '⏳ 저장 중'; status.style.color = '#b8860b'; }
+
+        try {
+          await api.updateRoomMaxLikes(this.state.roomId, next);
+          this.state.currentRoom.maxLikes = next;
+
+          // 적용 완료 표시 (초록)
+          if (sel) sel.style.backgroundColor = '#d4edda';
+          if (status) { status.textContent = '✓ 적용됨'; status.style.color = '#16a34a'; }
+
+          // 2.5초 뒤 원상복구
+          setTimeout(() => {
+            if (sel) sel.style.backgroundColor = '';
+            if (status) status.textContent = '';
+          }, 2500);
+        } catch (e) {
+          if (sel) sel.style.backgroundColor = '#ffd6d6';
+          if (status) { status.textContent = '✕ 실패'; status.style.color = '#dc2626'; }
+          alert(e.message);
+        }
+      },
+
+      // 교사용 정렬 모드 변경
+      setTeacherSort(mode) {
+        this.state.teacherSort = mode;
+        this.state.roomVersion = null;
+        this.fetchAndRenderTeacherRoom();
+      },
+
+      // 질문방 전체 삭제
+      async deleteRoomFn() {
+        const room = this.state.currentRoom;
+        if (!room) return;
+        if (!confirm(`'${room.question}' 질문방을 삭제할까요?\n학생들의 답변도 모두 사라집니다.`)) return;
+        try {
+          await api.deleteRoom(this.state.roomId);
+          alert("질문방이 삭제되었습니다.");
+          // 단원 목록으로 복귀
+          this.loadRooms(this.state.currentUnit);
+        } catch (e) { alert("삭제 실패: " + e.message); }
+      },
+
+      // ============= 입장코드 플로팅 팝업 =============
+      showRoomCodePopup(evt) {
+        const room = this.state.currentRoom;
+        if (!room) return;
+        const idEl = document.getElementById('popup-room-id');
+        idEl.innerText = room.roomId;
+        idEl.style.fontSize = '8rem'; // 기본 2배
+        const popup = document.getElementById('code-popup');
+
+        // 먼저 보이게
+        popup.classList.remove('hidden-view');
+        popup.style.right = 'auto';
+        popup.style.bottom = 'auto';
+
+        const placeAtClick = () => {
+          if (!evt || typeof evt.clientX !== 'number') return;
+          const w = popup.offsetWidth || 300;
+          const h = popup.offsetHeight || 200;
+          let left = evt.clientX - w / 2;   // 클릭 지점 가로 중앙
+          let top = evt.clientY + 16;       // 클릭 지점 살짝 아래
+          left = Math.max(8, Math.min(left, window.innerWidth - w - 8));
+          top = Math.max(8, Math.min(top, window.innerHeight - h - 8));
+          popup.style.left = left + 'px';
+          popup.style.top = top + 'px';
+        };
+
+        // 폰트 반영 후 정확히 재배치 (두 번: 즉시 + 다음 프레임)
+        placeAtClick();
+        requestAnimationFrame(placeAtClick);
+
+        // 드래그 핸들러 한 번만 연결
+        if (!this._codePopupDragReady) {
+          this._initCodePopupDrag();
+          this._codePopupDragReady = true;
+        }
+      },
+
+      hideRoomCodePopup() {
+        document.getElementById('code-popup').classList.add('hidden-view');
+      },
+
+      // 팝업 글자 크기 조절
+      growCodePopup() {
+        const el = document.getElementById('popup-room-id');
+        const cur = parseFloat(el.style.fontSize) || 8;
+        el.style.fontSize = Math.min(cur + 2, 20) + 'rem';
+      },
+      shrinkCodePopup() {
+        const el = document.getElementById('popup-room-id');
+        const cur = parseFloat(el.style.fontSize) || 8;
+        el.style.fontSize = Math.max(cur - 2, 2) + 'rem';
+      },
+
+      // 팝업 드래그 이동
+      _initCodePopupDrag() {
+        const popup = document.getElementById('code-popup');
+        const handle = document.getElementById('code-popup-handle');
+        let dragging = false, startX = 0, startY = 0, baseLeft = 0, baseTop = 0;
+
+        const onDown = (e) => {
+          dragging = true;
+          const pt = e.touches ? e.touches[0] : e;
+          const rect = popup.getBoundingClientRect();
+          // right 기준 → left 기준으로 전환
+          popup.style.left = rect.left + 'px';
+          popup.style.top = rect.top + 'px';
+          popup.style.right = 'auto';
+          baseLeft = rect.left;
+          baseTop = rect.top;
+          startX = pt.clientX;
+          startY = pt.clientY;
+          e.preventDefault();
+        };
+        const onMove = (e) => {
+          if (!dragging) return;
+          const pt = e.touches ? e.touches[0] : e;
+          let nl = baseLeft + (pt.clientX - startX);
+          let nt = baseTop + (pt.clientY - startY);
+          // 화면 밖으로 너무 나가지 않게 제한
+          nl = Math.max(-popup.offsetWidth + 80, Math.min(nl, window.innerWidth - 80));
+          nt = Math.max(0, Math.min(nt, window.innerHeight - 40));
+          popup.style.left = nl + 'px';
+          popup.style.top = nt + 'px';
+        };
+        const onUp = () => { dragging = false; };
+
+        handle.addEventListener('mousedown', onDown);
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+        handle.addEventListener('touchstart', onDown, { passive: false });
+        document.addEventListener('touchmove', onMove, { passive: false });
+        document.addEventListener('touchend', onUp);
+      },
+
+      // ============= 학생: 질문방 입장 =============
+      async handleStudentEnterRoom() {
+        const code = document.getElementById('student-room-code').value.trim();
+        if (!code) { alert("코드 입력"); return; }
+        this.enterRoomAsStudent(code);
+      },
+
+      async enterRoomAsStudent(roomId) {
+        this.state.roomId = roomId;
+        this.state.answers = [];
+        this.state.roomVersion = null;
+        this.state.hasSubmittedThisRoom = false;
+
+        try {
+          const room = await api.getRoom(roomId);
+          if (!room) { alert("질문방을 찾을 수 없습니다."); return; }
+          this.state.currentRoom = room;
+          this.switchView('view-student-room');
+          document.getElementById('sr-unit-text').innerText =
+            `[${room.subjectName} > ${room.unitName}]`;
+          document.getElementById('sr-question').innerText = room.question;
+          this.fetchAndRenderStudentRoom();
+        } catch (e) { alert(e.message); }
+      },
+
+      async fetchAndRenderStudentRoom() {
+        const res = await api.getAnswers(this.state.roomId, this.state.roomVersion);
+        if (!res.changed) return;
+        this.state.roomVersion = res.version;
+        this.state.answers = res.answers || [];
+
+        const me = this.state.answers.find(a => a.studentName === this.state.studentName);
+        const hasSubmitted = me && me.submitted;
+        this.state.hasSubmittedThisRoom = !!hasSubmitted;
+
+        const grid = document.getElementById('sr-others-grid');
+        const info = document.getElementById('sr-other-answers-info');
+        const room = this.state.currentRoom;
+
+        // 전체 명단 (나 포함)
+        const allStudents = this.state.answers;
+        const others = allStudents.filter(a => a.studentName !== this.state.studentName);
+        const submittedOthers = others.filter(a => a.submitted);
+        const myLikedCount = submittedOthers.filter(a =>
+          a.likers && a.likers.indexOf(this.state.studentName) > -1).length;
+
+        // 안내 문구
+        if (!hasSubmitted) {
+          info.innerHTML = `<span class="text-orange-600">✏️ 출석부에서 <b>내 칸(${this.escapeStr(this.state.studentName)})</b>을 눌러 답변을 작성하세요. 제출하면 친구들 답변이 보여요!</span>`;
+        } else {
+          const submittedCount = submittedOthers.length + 1;
+          info.innerHTML = `제출 <b>${submittedCount}</b>명 / 전체 ${allStudents.length}명`;
+          if (room.maxLikes > 0) {
+            info.innerHTML += ` <span class="text-pink-600 ml-2">(❤️ ${myLikedCount}/${room.maxLikes})</span>`;
+          }
+        }
+
+        // 정렬: 번호순으로 전체 명단 (출석부니까 번호순 고정)
+        const ordered = [...allStudents].sort((a, b) => this.compareByNumber(a, b));
+
+        grid.innerHTML = '';
+        ordered.forEach(ans => {
+          const isMe = ans.studentName === this.state.studentName;
+          const card = document.createElement('div');
+          const numTag = ans.studentNumber
+            ? `<span class="text-xs text-gray-400 mr-1">${this.escapeStr(ans.studentNumber)}</span>` : '';
+
+          // ===== 내 칸 =====
+          if (isMe) {
+            card.className = 'sr-cell retro-box p-3 cursor-pointer';
+            card.style.boxShadow = '4px 4px 0 0 #1a1a1a';
+            card.style.borderColor = '#3b82f6';
+            card.style.borderWidth = '4px';
+            card.onclick = () => this.openAnswerModal();
+
+            if (hasSubmitted) {
+              card.style.backgroundColor = '#dbeafe';
+              const commentTag = ans.teacherComment
+                ? `<div class="mt-1 text-xs text-orange-700 truncate">📌 ${this.escapeStr(ans.teacherComment)}</div>` : '';
+              card.innerHTML = `
+                <div class="flex justify-between items-center mb-1">
+                  <h4 class="font-black text-base text-blue-700">${numTag}나 ✅</h4>
+                  <span class="text-xs font-bold text-pink-500">❤️ ${ans.likes || 0}</span>
+                </div>
+                <p class="text-sm text-gray-800 sr-cell-text">${this.escapeStr(ans.text)}</p>
+                ${commentTag}
+                <div class="text-[11px] text-blue-600 font-bold mt-1">✏️ 눌러서 수정</div>`;
+            } else {
+              card.style.backgroundColor = '#fef9c3';
+              card.innerHTML = `
+                <div class="flex justify-between items-center mb-1">
+                  <h4 class="font-black text-base text-blue-700">${numTag}나</h4>
+                </div>
+                <p class="text-sm text-blue-600 font-bold sr-cell-text">✏️ 여기를 눌러<br>답변을 작성하세요!</p>`;
+            }
+            grid.appendChild(card);
+            return;
+          }
+
+          // ===== 친구 칸: 내가 제출 안 했으면 잠금 =====
+          if (!hasSubmitted) {
+            card.className = 'sr-cell retro-box p-3 opacity-40';
+            card.style.boxShadow = '3px 3px 0 0 #aaa';
+            card.innerHTML = `
+              <div class="flex justify-between items-center mb-1">
+                <h4 class="font-black text-base text-gray-500">${numTag}${this.escapeStr(ans.studentName)}</h4>
+                <span>🔒</span>
+              </div>
+              <p class="text-sm text-gray-400 sr-cell-text">제출하면 보여요</p>`;
+            grid.appendChild(card);
+            return;
+          }
+
+          // ===== 친구 칸: 미제출 =====
+          if (!ans.submitted) {
+            card.className = 'sr-cell retro-box p-3 opacity-50';
+            card.style.boxShadow = '3px 3px 0 0 #aaa';
+            card.innerHTML = `
+              <div class="flex justify-between items-center mb-1">
+                <h4 class="font-black text-base text-gray-500">${numTag}${this.escapeStr(ans.studentName)}</h4>
+              </div>
+              <p class="text-sm text-gray-400 italic sr-cell-text">아직 작성 안 함 ✏️</p>`;
+            grid.appendChild(card);
+            return;
+          }
+
+          // ===== 친구 칸: 제출됨 =====
+          let pinClass = '';
+          if (ans.isPinned === 'blue') pinClass = 'pinned-blue';
+          else if (ans.isPinned === 'yellow') pinClass = 'pinned-yellow';
+          else if (ans.isPinned === 'green') pinClass = 'pinned-green';
+          card.className = `sr-cell retro-box p-3 ${pinClass}`;
+
+          const iLiked = ans.likers && ans.likers.indexOf(this.state.studentName) > -1;
+          const heartIcon = iLiked ? '❤️' : '🤍';
+          const commentTag = ans.teacherComment
+            ? `<div class="mt-1 text-xs text-orange-700 truncate">📌 ${this.escapeStr(ans.teacherComment)}</div>` : '';
+
+          card.innerHTML = `
+            <div class="flex justify-between items-center mb-1">
+              <h4 class="font-black text-base text-black">${numTag}${this.escapeStr(ans.studentName)}</h4>
+              <div class="flex items-center gap-1">
+                <span class="text-xs font-bold text-pink-500">${ans.likes}</span>
+                <span class="heart-icon" onclick="app.handleStudentLike('${this.escapeStr(ans.studentName)}', ${iLiked})">${heartIcon}</span>
+              </div>
+            </div>
+            <p class="text-sm text-gray-800 sr-cell-text">${this.escapeStr(ans.text)}</p>
+            ${commentTag}`;
+          grid.appendChild(card);
+        });
+      },
+
+      // 답변 작성/수정 모달 열기
+      openAnswerModal() {
+        const room = this.state.currentRoom;
+        const me = this.state.answers.find(a => a.studentName === this.state.studentName);
+        const hasSubmitted = me && me.submitted;
+
+        const modal = document.getElementById('sr-answer-modal');
+        const title = document.getElementById('sr-modal-title');
+        const qEl = document.getElementById('sr-modal-question');
+        const text = document.getElementById('sr-modal-text');
+        const submitBtn = document.getElementById('sr-modal-submit');
+        const saveBtn = document.getElementById('sr-modal-save');
+        const commentBox = document.getElementById('sr-modal-comment');
+
+        qEl.innerText = room ? room.question : '';
+
+        if (hasSubmitted) {
+          title.innerText = '✏️ 내 답변 수정';
+          text.value = me.text;
+          submitBtn.classList.add('hidden-view');
+          saveBtn.classList.remove('hidden-view');
+          if (me.teacherComment) {
+            commentBox.innerHTML = `<b>📌 선생님:</b> ${this.escapeStr(me.teacherComment)}`;
+            commentBox.classList.remove('hidden-view');
+          } else {
+            commentBox.classList.add('hidden-view');
+          }
+        } else {
+          title.innerText = '✏️ 나의 답변 작성';
+          text.value = '';
+          submitBtn.classList.remove('hidden-view');
+          saveBtn.classList.add('hidden-view');
+          commentBox.classList.add('hidden-view');
+        }
+
+        modal.classList.remove('hidden-view');
+        setTimeout(() => text.focus(), 50);
+      },
+
+      closeAnswerModal() {
+        document.getElementById('sr-answer-modal').classList.add('hidden-view');
+      },
+
+      async submitMyAnswer() {
+        const text = document.getElementById('sr-modal-text').value.trim();
+        if (!text) { alert("답변을 입력하세요."); return; }
+        try {
+          await api.submitAnswer({
+            roomId: this.state.roomId,
+            studentName: this.state.studentName,
+            text: text
+          });
+          this.closeAnswerModal();
+          this.state.roomVersion = null;
+          this.fetchAndRenderStudentRoom();
+        } catch (e) { alert(e.message); }
+      },
+
+      async saveEditedAnswer() {
+        const newText = document.getElementById('sr-modal-text').value.trim();
+        if (!newText) { alert("답변을 입력하세요."); return; }
+        try {
+          await api.updateAnswer({
+            roomId: this.state.roomId,
+            studentName: this.state.studentName,
+            newText: newText
+          });
+          this.closeAnswerModal();
+          this.state.roomVersion = null;
+          this.fetchAndRenderStudentRoom();
+        } catch (e) { alert(e.message); }
+      },
+
+      async handleStudentLike(targetName, currentlyLiked) {
+        const room = this.state.currentRoom;
+        if (!currentlyLiked && room && room.maxLikes > 0) {
+          const others = this.state.answers.filter(a => a.studentName !== this.state.studentName && a.submitted);
+          const myLiked = others.filter(a => a.likers && a.likers.indexOf(this.state.studentName) > -1).length;
+          if (myLiked >= room.maxLikes) {
+            alert(`이미 좋아요를 ${room.maxLikes}개 눌렀어요. 한도 도달!`);
+            return;
+          }
+        }
+        try {
+          await api.toggleLike(this.state.roomId, targetName, this.state.studentName);
+          this.state.roomVersion = null;
+          this.fetchAndRenderStudentRoom();
+        } catch (e) { alert(e.message); }
+      },
+
+      // ============= 폴링 =============
+      startPolling() {
+        if (this.state.pollingInterval) clearInterval(this.state.pollingInterval);
+        this.state.pollingInterval = setInterval(() => {
+          if (this.state.role === 'teacher') {
+            this.fetchAndRenderTeacherRoom().catch(() => { });
+          } else {
+            this.fetchAndRenderStudentRoom().catch(() => { });
+          }
+        }, 5000);
+      },
+
+      // ============= 유틸 =============
+      // onclick 속성과 HTML 컨텐츠 양쪽에서 안전하게 동작하도록
+      // ' → \\'  (JS 문자열 이스케이프), " → &quot; (HTML 속성 보호)
+      escapeStr(s) {
+        if (s === null || s === undefined) return '';
+        return String(s).replace(/'/g, "\\'").replace(/"/g, '&quot;');
+      },
+
+      // 학생 번호 기준 정렬 비교 (숫자 우선, 번호 없으면 뒤로)
+      compareByNumber(a, b) {
+        const na = parseInt(String(a.studentNumber).replace(/[^0-9]/g, ''), 10);
+        const nb = parseInt(String(b.studentNumber).replace(/[^0-9]/g, ''), 10);
+        const va = isNaN(na) ? Infinity : na;
+        const vb = isNaN(nb) ? Infinity : nb;
+        if (va !== vb) return va - vb;
+        // 번호가 같거나 둘 다 없으면 이름순
+        return String(a.studentName).localeCompare(String(b.studentName), 'ko');
+      }
+    };
+
+    // 시작
+    window.addEventListener('load', () => app.init());
+  </script>
+
+<div id="conn-modal" style="display:none; position:fixed; inset:0; z-index:2147482000; background:rgba(0,0,0,.45); align-items:center; justify-content:center; padding:20px;">
+  <div style="background:#fff; border-radius:20px; max-width:460px; width:100%; padding:26px; box-shadow:0 20px 60px rgba(0,0,0,.3); max-height:82vh; overflow-y:auto;">
+    <h3 style="margin:0 0 6px; font-size:1.3rem; color:#4338CA; font-weight:800;">⚙️ 선생님 설정</h3>
+    <p style="margin:0 0 14px; font-size:.92rem; color:#6b7280; line-height:1.5;">선생님 구글 시트의 웹앱 주소(.../exec)를 붙여넣고 연결하면, 과목·질문방·학생 답변이 선생님 시트에 저장됩니다. 연결하지 않으면 무료 체험 모드로 동작하며 기록은 이 기기에만 저장됩니다.</p>
+    <input id="conn-exec-input" type="text" placeholder="https://script.google.com/macros/s/.../exec" style="width:100%; height:48px; border:2px solid #C7D2FE; border-radius:12px; padding:0 14px; font-size:.95rem; box-sizing:border-box;">
+    <div style="display:flex; gap:8px; margin-top:12px;">
+      <button type="button" onclick="doConnectQdict()" style="flex:1; height:48px; border:0; border-radius:12px; background:#4F46E5; color:#fff; font-size:1.05rem; font-weight:800; cursor:pointer;">연결하기</button>
+      <button type="button" onclick="closeConnModal()" style="height:48px; border:2px solid #e5e7eb; border-radius:12px; background:#fff; color:#6b7280; font-size:1rem; padding:0 16px; cursor:pointer;">닫기</button>
+    </div>
+    <div id="conn-status-msg" style="margin-top:10px; font-size:.85rem; min-height:18px;"></div>
+    <div id="conn-linkbox" style="display:none; margin-top:16px; padding:14px; background:#EEF2FF; border:2px solid #C7D2FE; border-radius:12px;">
+      <p style="margin:0 0 8px; font-size:.9rem; color:#4338CA; font-weight:800;">✅ 연결됨 · 학생용 입장 주소</p>
+      <div style="display:flex; gap:6px;">
+        <input id="conn-student-link" type="text" readonly style="flex:1; height:40px; border:1px solid #d1d5db; border-radius:8px; padding:0 10px; font-size:.82rem; box-sizing:border-box;">
+        <button type="button" onclick="copyQdictLink()" style="height:40px; border:0; border-radius:8px; background:#4F46E5; color:#fff; padding:0 14px; font-weight:800; cursor:pointer;">복사</button>
+      </div>
+      <button type="button" onclick="doDisconnectQdict()" style="margin-top:10px; height:38px; width:100%; border:2px solid #fca5a5; border-radius:8px; background:#fff; color:#b91c1c; font-weight:700; cursor:pointer;">연결 해제</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var KEY='execUrl:qdict';
+  function q(id){return document.getElementById(id);}
+  function cur(){ try{return localStorage.getItem(KEY)||'';}catch(e){return '';} }
+  window.openConnModal=function(){ var m=q('conn-modal'); var c=cur(); q('conn-exec-input').value=c||''; if(c)showLink(c); m.style.display='flex'; };
+  window.closeConnModal=function(){ q('conn-modal').style.display='none'; };
+  function showLink(u){ var link=location.origin+location.pathname+'#c='+encodeURIComponent(u); q('conn-student-link').value=link; q('conn-linkbox').style.display='block'; }
+  window.doConnectQdict=function(){ var v=(q('conn-exec-input').value||'').trim(); var msg=q('conn-status-msg'); if(!v||v.indexOf('http')!==0){msg.style.color='#b91c1c';msg.textContent='올바른 주소를 입력해 주세요. (https://.../exec)';return;} try{localStorage.setItem(KEY,v);}catch(e){} msg.style.color='#065F46'; msg.textContent='연결됐어요! 학생용 주소를 복사해 나눠 주세요.'; showLink(v); var b=q('__demoBar'); if(b&&b.parentNode)b.parentNode.removeChild(b); setTimeout(function(){location.reload();},900); };
+  window.doDisconnectQdict=function(){ try{localStorage.removeItem(KEY);}catch(e){} location.href=location.origin+location.pathname; };
+  window.copyQdictLink=function(){ var li=q('conn-student-link'); li.select(); try{document.execCommand('copy');}catch(e){} try{navigator.clipboard.writeText(li.value);}catch(e){} var msg=q('conn-status-msg'); msg.style.color='#065F46'; msg.textContent='학생용 주소를 복사했어요.'; };
+  document.addEventListener('DOMContentLoaded',function(){ var e=q('conn-setting-entry'); if(!e)return; var W=window.__qdict||{}; if(W.IS_LINK||W.NATIVE)e.style.display='none'; else e.style.display='block'; });
+})();
+</script>
+
+<script>
+(function () {
+  function isDemo() {
+    try {
+      if (/[#&]c=/.test(location.hash || '')) return false;
+      for (var j = 0; j < localStorage.length; j++) {
+        var k = localStorage.key(j) || '';
+        if (/execurl|exec_url|exec:|gasurl|serverurl|sheet_api|gas_exec|appserverurl|endpoint/i.test(k) && localStorage.getItem(k)) return false;
+      }
+      return true;
+    } catch (e) { return true; }
+  }
+  function show() {
+    if (document.getElementById('__demoBar')) return;
+    if (!isDemo()) return;
+    var bar = document.createElement('div');
+    bar.id = '__demoBar';
+    bar.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:2147483000;background:#1f2937;color:#fff;font-size:13px;line-height:1.45;padding:9px 38px calc(9px + env(safe-area-inset-bottom)) 14px;text-align:center;font-family:sans-serif;box-shadow:0 -2px 10px rgba(0,0,0,0.25);';
+    bar.innerHTML = '체험 모드예요 · 활동 기록은 이 기기에만 저장돼요(이어하기 가능). 선생님이 구글 시트를 연결하면 시트에 저장됩니다.';
+    var x = document.createElement('button');
+    x.type = 'button'; x.textContent = '\u2715';
+    x.style.cssText = 'position:absolute;right:8px;top:50%;transform:translateY(-50%);background:transparent;border:0;color:#fff;font-size:16px;line-height:1;cursor:pointer;padding:6px;';
+    x.onclick = function () { try { bar.parentNode.removeChild(bar); } catch (e) {} };
+    bar.appendChild(x);
+    document.body.appendChild(bar);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', show);
+  else show();
+})();
+</script>
+
+</body>
+</html>
